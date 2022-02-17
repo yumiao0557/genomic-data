@@ -1,0 +1,624 @@
+#Patient Identifier	Diagnosis Age	Sex	Tumor Site	Percent Necrosis
+#Identifier to uniquely specify a patient.	Age at which a condition or disease was first diagnosed.	Sex	Tumor Site	Percent necrosis.
+#STRING	NUMBER	STRING	STRING	NUMBER
+#1	1	1	1	1
+PATIENT_ID	AGE	SEX	TUMOR_SITE	PERCENTAGE_NECROSIS
+coadread_dfci_2016_335135	86	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_593	68	Male	Rectum	0
+coadread_dfci_2016_2269	73	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_578	61	Male	Cecum	10
+coadread_dfci_2016_3021	77	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3724	79	Female	Ascending To Transverse Colon	15
+coadread_dfci_2016_207430	85	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_116	53	Female	Splenic Flexure To Sigmoid Colon	30
+coadread_dfci_2016_1241	68	Female	Cecum	0
+coadread_dfci_2016_3701	76	Female	Ascending To Transverse Colon	44
+coadread_dfci_2016_3640	72	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2448	69	Female	Cecum	0
+coadread_dfci_2016_1222	72	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_345	70	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_267922	77	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_1212	67	Female	Cecum	5
+coadread_dfci_2016_1791	68	Male	Cecum	30
+coadread_dfci_2016_3321	71	Female	Cecum	22
+coadread_dfci_2016_546	70	Male	Cecum	30
+coadread_dfci_2016_197	68	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3235	86	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_233366	80	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_306558	80	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3080	75	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3643	74	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_293	72	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3262	81	Female	Cecum	0
+coadread_dfci_2016_352983	72	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3646	66	Female	Cecum	11
+coadread_dfci_2016_3181	77	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2564	63	Female	Cecum	30
+coadread_dfci_2016_68	60	Female	Cecum	0
+coadread_dfci_2016_1202	58	Female	Cecum	0
+coadread_dfci_2016_242594	84	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_230737	76	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3064	76	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3690	73	Female	Ascending To Transverse Colon	8
+coadread_dfci_2016_60	63	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1748	85	Male	Ascending To Transverse Colon	10
+coadread_dfci_2016_2624	73	Female	Ascending To Transverse Colon	30
+coadread_dfci_2016_3263	70	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1849	79	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3503	68	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_102	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3091	66	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_189255	77	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3729	84	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2379	67	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3225	57	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3024	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_4430	83	Male	Cecum	5
+coadread_dfci_2016_354	64	Female	Cecum	0
+coadread_dfci_2016_280091	86	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3721	77	Female	Ascending To Transverse Colon	33
+coadread_dfci_2016_368	64	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1762	70	Male	Splenic Flexure To Sigmoid Colon	20
+coadread_dfci_2016_3641	68	Female	Ascending To Transverse Colon	5
+coadread_dfci_2016_3269	69	Female	Ascending To Transverse Colon	22
+coadread_dfci_2016_3202	69	Male	Cecum	0
+coadread_dfci_2016_1225	75	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3319	75	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_261	70	Female	Ascending To Transverse Colon	50
+coadread_dfci_2016_134258	73	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3658	84	Female	Ascending To Transverse Colon	22
+coadread_dfci_2016_2641	75	Female	Splenic Flexure To Sigmoid Colon	50
+coadread_dfci_2016_55	62	Female	Ascending To Transverse Colon	40
+coadread_dfci_2016_3152	71	Male	Cecum	33
+coadread_dfci_2016_1231	74	Female	Cecum	0
+coadread_dfci_2016_523	74	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2197	67	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3451	83	Male	Cecum	0
+coadread_dfci_2016_390	52	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_140903	72	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2936	67	Female	Ascending To Transverse Colon	33
+coadread_dfci_2016_458	74	Male	Cecum	10
+coadread_dfci_2016_2762	76	Female	Ascending To Transverse Colon	15
+coadread_dfci_2016_2354	73	Female	Rectum	0
+coadread_dfci_2016_3535	85	Male	Ascending To Transverse Colon	25
+coadread_dfci_2016_2944	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_92	67	Female	Ascending To Transverse Colon	10
+coadread_dfci_2016_227039	82	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_605	80	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_4500	79	Male	Ascending To Transverse Colon	20
+coadread_dfci_2016_162841	82	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_407	69	Female	Ascending To Transverse Colon	10
+coadread_dfci_2016_3025	77	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_207	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_683	60	Male	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_3611	69	Male	Rectum	0
+coadread_dfci_2016_1230	62	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3704	71	Female	Cecum	0
+coadread_dfci_2016_3094	74	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3174	74	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3422	75	Male	Ascending To Transverse Colon	22
+coadread_dfci_2016_112	62	Female	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_2227	70	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2257	80	Male	Cecum	0
+coadread_dfci_2016_3676	70	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3049	74	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3498	80	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3653	70	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_341	67	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_352566	73	Female	Rectum	NA
+coadread_dfci_2016_3399	73	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_2423	59	Female	Splenic Flexure To Sigmoid Colon	50
+coadread_dfci_2016_302124	74	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2372	65	Female	Cecum	0
+coadread_dfci_2016_4538	62	Male	Rectum	3
+coadread_dfci_2016_115875	74	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_462	75	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_224049	85	Female	Rectum	NA
+coadread_dfci_2016_111	71	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2674	72	Male	Cecum	0
+coadread_dfci_2016_3184	77	Male	Cecum	15
+coadread_dfci_2016_4514	83	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_677	71	Male	Rectum	0
+coadread_dfci_2016_3249	64	Male	Cecum	0
+coadread_dfci_2016_2932	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1250	78	Female	Rectum	0
+coadread_dfci_2016_2370	58	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2281	80	Male	Ascending To Transverse Colon	30
+coadread_dfci_2016_3446	70	Male	Cecum	15
+coadread_dfci_2016_280	65	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_331889	79	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2946	79	Female	Ascending To Transverse Colon	11
+coadread_dfci_2016_3610	80	Male	Cecum	NA
+coadread_dfci_2016_62	74	Female	Ascending To Transverse Colon	30
+coadread_dfci_2016_2397	68	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_84	54	Female	Splenic Flexure To Sigmoid Colon	20
+coadread_dfci_2016_312708	73	Female	Rectum	NA
+coadread_dfci_2016_372	68	Female	Cecum	10
+coadread_dfci_2016_3253	72	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_33	59	Female	Cecum	10
+coadread_dfci_2016_287	60	Female	Cecum	0
+coadread_dfci_2016_4503	83	Male	Rectum	NA
+coadread_dfci_2016_3110	60	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2365	70	Female	Rectum	20
+coadread_dfci_2016_132	69	Female	Rectum	5
+coadread_dfci_2016_3301	62	Male	Cecum	0
+coadread_dfci_2016_42	55	Female	Rectum	0
+coadread_dfci_2016_299	55	Female	Cecum	0
+coadread_dfci_2016_2225	83	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_402	64	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_251	58	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3415	64	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_336	66	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_3427	84	Male	Rectum	0
+coadread_dfci_2016_613	69	Male	Cecum	20
+coadread_dfci_2016_3437	69	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_213	61	Female	Cecum	5
+coadread_dfci_2016_498	55	Male	Splenic Flexure To Sigmoid Colon	30
+coadread_dfci_2016_636	50	Male	Cecum	10
+coadread_dfci_2016_2999	69	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_561	79	Male	Rectum	0
+coadread_dfci_2016_3205	74	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_306	71	Female	Splenic Flexure To Sigmoid Colon	30
+coadread_dfci_2016_2323	79	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3442	85	Male	Rectum	33
+coadread_dfci_2016_2982	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_114	76	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_73	65	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_430	67	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_687	66	Male	Cecum	5
+coadread_dfci_2016_3005	63	Female	Cecum	0
+coadread_dfci_2016_1798	76	Male	Rectum	0
+coadread_dfci_2016_3227	78	Male	Rectum	0
+coadread_dfci_2016_4525	65	Male	Cecum	30
+coadread_dfci_2016_3637	70	Male	Cecum	0
+coadread_dfci_2016_2764	82	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_2565	66	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2945	81	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3669	78	Female	Ascending To Transverse Colon	5
+coadread_dfci_2016_253	71	Female	Cecum	5
+coadread_dfci_2016_304	59	Female	Rectum	0
+coadread_dfci_2016_3182	83	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2812	78	Male	Cecum	2
+coadread_dfci_2016_2445	64	Female	Rectum	0
+coadread_dfci_2016_3305	80	Male	Splenic Flexure To Sigmoid Colon	15
+coadread_dfci_2016_2635	73	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1216	56	Female	Rectum	20
+coadread_dfci_2016_167191	77	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3169	78	Male	Rectum	0
+coadread_dfci_2016_2954	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_485	62	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_250	57	Female	Cecum	0
+coadread_dfci_2016_3172	75	Male	Ascending To Transverse Colon	NA
+coadread_dfci_2016_164668	66	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_101930	84	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3022	75	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_607	68	Male	Rectum	0
+coadread_dfci_2016_1208	57	Female	Ascending To Transverse Colon	20
+coadread_dfci_2016_1254	77	Female	Rectum	0
+coadread_dfci_2016_3430	65	Male	Rectum	0
+coadread_dfci_2016_1761	79	Male	Rectum	0
+coadread_dfci_2016_344	53	Female	Cecum	10
+coadread_dfci_2016_3602	85	Male	Ascending To Transverse Colon	15
+coadread_dfci_2016_1797	80	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_497	71	Male	Cecum	0
+coadread_dfci_2016_2342	53	Female	Rectum	0
+coadread_dfci_2016_3088	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_292	60	Female	Ascending To Transverse Colon	5
+coadread_dfci_2016_50	58	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_3651	84	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_236849	83	Female	Rectum	NA
+coadread_dfci_2016_1848	78	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2220	80	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_1206	72	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2992	67	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1745	84	Male	Cecum	10
+coadread_dfci_2016_3483	83	Male	Rectum	0
+coadread_dfci_2016_2963	79	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_688	46	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3029	68	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3010	74	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_93	68	Female	Rectum	0
+coadread_dfci_2016_3421	82	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3534	74	Male	Ascending To Transverse Colon	11
+coadread_dfci_2016_256	67	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1236	66	Female	Rectum	0
+coadread_dfci_2016_1244	63	Female	Cecum	0
+coadread_dfci_2016_1804	76	Male	Rectum	10
+coadread_dfci_2016_195	72	Female	Ascending To Transverse Colon	3
+coadread_dfci_2016_123	50	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_1760	78	Male	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_3019	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_662	69	Male	Splenic Flexure To Sigmoid Colon	30
+coadread_dfci_2016_3481	81	Male	Rectum	0
+coadread_dfci_2016_2416	71	Female	Cecum	0
+coadread_dfci_2016_3621	70	Male	Rectum	0
+coadread_dfci_2016_419	68	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3330	80	Female	Cecum	0
+coadread_dfci_2016_676	77	Male	Rectum	0
+coadread_dfci_2016_2259	75	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2759	65	Female	Rectum	0
+coadread_dfci_2016_2966	56	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_492	66	Male	Cecum	15
+coadread_dfci_2016_2808	68	Female	Cecum	0
+coadread_dfci_2016_255	64	Female	Rectum	0
+coadread_dfci_2016_2410	52	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_291403	86	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_237641	69	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_437	54	Male	Cecum	10
+coadread_dfci_2016_1844	73	Male	Cecum	0
+coadread_dfci_2016_2261	69	Male	Rectum	99
+coadread_dfci_2016_4491	76	Male	Ascending To Transverse Colon	10
+coadread_dfci_2016_3632	71	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_197908	83	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_412	69	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_270033	69	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_1772	52	Male	Rectum	30
+coadread_dfci_2016_343654	86	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_302873	63	Female	Cecum	NA
+coadread_dfci_2016_2417	59	Female	Ascending To Transverse Colon	10
+coadread_dfci_2016_2441	75	Female	Rectum	0
+coadread_dfci_2016_276701	NA	Female	Na	NA
+coadread_dfci_2016_3414	73	Male	Rectum	0
+coadread_dfci_2016_3178	71	Male	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_2214	77	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2359	57	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1845	79	Male	Rectum	0
+coadread_dfci_2016_1205	59	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3660	68	Female	Rectum	0
+coadread_dfci_2016_3351	82	Male	Ascending To Transverse Colon	5
+coadread_dfci_2016_2263	79	Male	Cecum	0
+coadread_dfci_2016_3316	76	Male	Rectum	0
+coadread_dfci_2016_295702	69	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_1161	64	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_311	69	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_2995	65	Female	Rectum	3
+coadread_dfci_2016_3105	84	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_491	64	Male	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_3558	77	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2400	69	Female	Rectum	0
+coadread_dfci_2016_231	59	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2266	79	Male	Cecum	0
+coadread_dfci_2016_3116	77	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_165	55	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_259101	68	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2454	67	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1747	77	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2289	88	Male	Cecum	10
+coadread_dfci_2016_2406	58	Female	Rectum	0
+coadread_dfci_2016_3062	75	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_214060	77	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3273	71	Female	Cecum	0
+coadread_dfci_2016_1240	69	Female	Cecum	0
+coadread_dfci_2016_2388	47	Female	Rectum	0
+coadread_dfci_2016_3508	70	Male	Cecum	0
+coadread_dfci_2016_1742	64	Male	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_196972	70	Female	Cecum	NA
+coadread_dfci_2016_471	68	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_621	80	Male	Ascending To Transverse Colon	20
+coadread_dfci_2016_229707	68	Female	Cecum	NA
+coadread_dfci_2016_24	69	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3502	78	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1221	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_694	47	Male	Rectum	0
+coadread_dfci_2016_3714	70	Female	Rectum	15
+coadread_dfci_2016_3187	68	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3539	81	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3194	72	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_270588	68	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3549	88	Male	Cecum	0
+coadread_dfci_2016_3709	77	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1183	77	Female	Rectum	0
+coadread_dfci_2016_3104	55	Male	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2984	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_463	72	Male	Cecum	0
+coadread_dfci_2016_4505	82	Male	Rectum	0
+coadread_dfci_2016_2974	71	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_647	73	Male	Cecum	0
+coadread_dfci_2016_691	66	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_103320	71	Female	Cecum	NA
+coadread_dfci_2016_328	68	Female	Ascending To Transverse Colon	10
+coadread_dfci_2016_3255	83	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_359705	81	Female	Cecum	NA
+coadread_dfci_2016_3112	80	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2413	56	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2763	57	Female	Rectum	0
+coadread_dfci_2016_3645	85	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2304	77	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3261	70	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_693	65	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_418	57	Male	Rectum	10
+coadread_dfci_2016_4534	73	Male	Cecum	5
+coadread_dfci_2016_180077	74	Female	Rectum	NA
+coadread_dfci_2016_1187	65	Female	Cecum	0
+coadread_dfci_2016_46	51	Female	Rectum	0
+coadread_dfci_2016_4529	78	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2389	70	Female	Rectum	0
+coadread_dfci_2016_374	67	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_360138	73	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_2935	64	Female	Rectum	0
+coadread_dfci_2016_2768	65	Female	Rectum	0
+coadread_dfci_2016_224	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2369	48	Female	Rectum	20
+coadread_dfci_2016_3523	82	Male	Cecum	25
+coadread_dfci_2016_4508	78	Male	Cecum	5
+coadread_dfci_2016_142275	61	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_316	70	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_106	67	Female	Cecum	0
+coadread_dfci_2016_1160	72	Female	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_2430	67	Female	Cecum	10
+coadread_dfci_2016_1226	65	Female	Rectum	70
+coadread_dfci_2016_164221	73	Female	Rectum	NA
+coadread_dfci_2016_1153	66	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3668	59	Female	Splenic Flexure To Sigmoid Colon	4
+coadread_dfci_2016_262114	85	Female	Rectum	NA
+coadread_dfci_2016_3191	77	Male	Rectum	0
+coadread_dfci_2016_3546	65	Male	Rectum	0
+coadread_dfci_2016_3680	85	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2991	65	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_640	53	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3053	71	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1247	69	Female	Rectum	0
+coadread_dfci_2016_2969	60	Female	Cecum	0
+coadread_dfci_2016_1156	70	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2265	64	Male	Cecum	0
+coadread_dfci_2016_2271	56	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_4536	73	Male	Rectum	30
+coadread_dfci_2016_2394	71	Female	Rectum	0
+coadread_dfci_2016_202	54	Female	Rectum	10
+coadread_dfci_2016_3108	73	Female	Cecum	0
+coadread_dfci_2016_1193	64	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2941	73	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2250	62	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_628	52	Male	Rectum	5
+coadread_dfci_2016_214901	83	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_426	67	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1157	76	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3304	72	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_444	71	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_112874	79	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3485	69	Male	Rectum	0
+coadread_dfci_2016_2955	69	Female	Ascending To Transverse Colon	33
+coadread_dfci_2016_323	61	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3674	84	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2247	71	Male	Cecum	0
+coadread_dfci_2016_2455	67	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_182584	75	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_2621	64	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_277	60	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3092	68	Female	Cecum	0
+coadread_dfci_2016_2769	67	Female	Ascending To Transverse Colon	40
+coadread_dfci_2016_3479	81	Male	Cecum	0
+coadread_dfci_2016_405	52	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2767	75	Female	Rectum	NA
+coadread_dfci_2016_496	49	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_504	76	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3294	68	Male	Rectum	0
+coadread_dfci_2016_2967	72	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3265	75	Female	Rectum	NA
+coadread_dfci_2016_3232	80	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3725	75	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3011	70	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3045	65	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3323	77	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_1743	72	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_2364	70	Female	Rectum	0
+coadread_dfci_2016_160282	68	Female	Cecum	NA
+coadread_dfci_2016_3557	64	Male	Rectum	0
+coadread_dfci_2016_3234	86	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_615	61	Male	Cecum	10
+coadread_dfci_2016_1262	61	Male	Rectum	0
+coadread_dfci_2016_1224	58	Female	Rectum	0
+coadread_dfci_2016_2284	56	Male	Rectum	0
+coadread_dfci_2016_3002	76	Female	Rectum	0
+coadread_dfci_2016_1251	63	Female	Cecum	0
+coadread_dfci_2016_3671	71	Female	Ascending To Transverse Colon	1
+coadread_dfci_2016_223	62	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1249	60	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_43	42	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_4533	82	Male	Cecum	0
+coadread_dfci_2016_2775	75	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_240	73	Female	Rectum	10
+coadread_dfci_2016_204	65	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_3440	86	Male	Cecum	0
+coadread_dfci_2016_1794	86	Male	Cecum	0
+coadread_dfci_2016_3542	80	Male	Cecum	0
+coadread_dfci_2016_604	74	Male	Rectum	0
+coadread_dfci_2016_3712	64	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_4526	82	Male	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_4537	76	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2765	79	Female	Cecum	0
+coadread_dfci_2016_3016	78	Female	Cecum	0
+coadread_dfci_2016_358480	73	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_222	67	Female	Rectum	0
+coadread_dfci_2016_2260	65	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_30	74	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1170	79	Female	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_2760	67	Female	Rectum	0
+coadread_dfci_2016_283200	65	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_1232	73	Female	Rectum	10
+coadread_dfci_2016_3529	58	Male	Rectum	0
+coadread_dfci_2016_3058	80	Female	Rectum	0
+coadread_dfci_2016_193667	73	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3059	68	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3496	90	Male	Ascending To Transverse Colon	22
+coadread_dfci_2016_442	73	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2438	57	Female	Rectum	0
+coadread_dfci_2016_2939	75	Female	Rectum	0
+coadread_dfci_2016_1227	63	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3237	85	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3038	78	Female	Rectum	0
+coadread_dfci_2016_3673	76	Female	Cecum	0
+coadread_dfci_2016_201263	73	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3298	48	Male	Splenic Flexure To Sigmoid Colon	33
+coadread_dfci_2016_4506	81	Male	Rectum	0
+coadread_dfci_2016_354207	82	Female	Cecum	NA
+coadread_dfci_2016_3644	62	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_20	52	Female	Ascending To Transverse Colon	5
+coadread_dfci_2016_3639	76	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2434	56	Female	Rectum	80
+coadread_dfci_2016_2934	68	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_229051	78	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_3705	65	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1803	63	Male	Rectum	10
+coadread_dfci_2016_3439	80	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2366	61	Female	Rectum	30
+coadread_dfci_2016_3699	80	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3204	71	Male	Cecum	0
+coadread_dfci_2016_3338	70	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3170	77	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_2976	76	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3527	74	Male	Rectum	0
+coadread_dfci_2016_3650	72	Female	Splenic Flexure To Sigmoid Colon	3
+coadread_dfci_2016_365383	70	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_237969	89	Female	Ascending To Transverse Colon	NA
+coadread_dfci_2016_110220	81	Female	Rectum	NA
+coadread_dfci_2016_3665	80	Female	Ascending To Transverse Colon	15
+coadread_dfci_2016_3102	81	Male	Cecum	0
+coadread_dfci_2016_3099	79	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3209	67	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1771	73	Male	Cecum	NA
+coadread_dfci_2016_1191	77	Female	Rectum	0
+coadread_dfci_2016_2457	75	Female	Cecum	0
+coadread_dfci_2016_2926	66	Female	Rectum	NA
+coadread_dfci_2016_587	61	Male	Rectum	30
+coadread_dfci_2016_2367	66	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_32	64	Female	Cecum	0
+coadread_dfci_2016_22	74	Female	Cecum	0
+coadread_dfci_2016_603	70	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_101	69	Female	Rectum	0
+coadread_dfci_2016_3698	71	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3683	78	Female	Rectum	1
+coadread_dfci_2016_631	75	Male	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_3692	63	Male	Rectum	0
+coadread_dfci_2016_657	60	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_241681	82	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_1195	65	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3398	75	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3267	62	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3046	60	Female	Rectum	0
+coadread_dfci_2016_3144	77	Male	Rectum	0
+coadread_dfci_2016_2429	59	Female	Rectum	0
+coadread_dfci_2016_348	64	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3335	80	Male	Rectum	NA
+coadread_dfci_2016_475	69	Male	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_2283	70	Male	Rectum	0
+coadread_dfci_2016_521	63	Male	Rectum	5
+coadread_dfci_2016_351	50	Female	Splenic Flexure To Sigmoid Colon	10
+coadread_dfci_2016_298012	84	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_2766	73	Female	Cecum	0
+coadread_dfci_2016_2279	65	Male	Splenic Flexure To Sigmoid Colon	20
+coadread_dfci_2016_2647	68	Female	Rectum	11
+coadread_dfci_2016_330	65	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_2568	59	Female	Cecum	0
+coadread_dfci_2016_645	74	Male	Rectum	0
+coadread_dfci_2016_519	81	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3431	77	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1185	55	Female	Rectum	10
+coadread_dfci_2016_2948	74	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_391	65	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2957	63	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_18	59	Female	Rectum	0
+coadread_dfci_2016_1190	65	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_3484	82	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_66	67	Female	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_3167	85	Male	Rectum	0
+coadread_dfci_2016_3601	83	Male	Rectum	0
+coadread_dfci_2016_1755	75	Male	Cecum	0
+coadread_dfci_2016_3405	80	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_1184	68	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1167	69	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_4519	66	Male	Splenic Flexure To Sigmoid Colon	5
+coadread_dfci_2016_3509	75	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_464	70	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_1165	63	Female	Rectum	0
+coadread_dfci_2016_108	55	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3654	77	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_346942	69	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3678	79	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_429	78	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2303	60	Male	Cecum	0
+coadread_dfci_2016_4520	NA	Male	Ascending To Transverse Colon	NA
+coadread_dfci_2016_461	77	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3710	76	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3340	67	Male	Cecum	0
+coadread_dfci_2016_2270	79	Male	Cecum	0
+coadread_dfci_2016_251808	77	Female	Rectum	NA
+coadread_dfci_2016_2664	70	Male	Ascending To Transverse Colon	11
+coadread_dfci_2016_378	65	Female	Ascending To Transverse Colon	5
+coadread_dfci_2016_3528	84	Male	Rectum	0
+coadread_dfci_2016_2458	63	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3670	86	Female	Cecum	3
+coadread_dfci_2016_171816	85	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3604	84	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_191	71	Female	Cecum	0
+coadread_dfci_2016_356	60	Female	Rectum	0
+coadread_dfci_2016_308390	77	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_311196	68	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3545	78	Male	Cecum	0
+coadread_dfci_2016_1196	71	Female	Rectum	0
+coadread_dfci_2016_2929	60	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3309	56	Male	Ascending To Transverse Colon	10
+coadread_dfci_2016_4522	70	Male	Rectum	3
+coadread_dfci_2016_2439	72	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3726	71	Female	Cecum	0
+coadread_dfci_2016_3336	73	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3443	63	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_186	71	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2949	76	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2252	69	Male	Rectum	10
+coadread_dfci_2016_366793	69	Female	Rectum	NA
+coadread_dfci_2016_229	66	Female	Rectum	0
+coadread_dfci_2016_3706	61	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_2582	72	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2938	79	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_353622	65	Female	Rectum	NA
+coadread_dfci_2016_183221	74	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_2959	70	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3677	69	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_423	67	Male	Rectum	0
+coadread_dfci_2016_2418	71	Female	Rectum	0
+coadread_dfci_2016_627	71	Male	Rectum	5
+coadread_dfci_2016_3288	60	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_680	74	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_70	65	Female	Rectum	10
+coadread_dfci_2016_3603	75	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3432	66	Male	Cecum	0
+coadread_dfci_2016_1204	66	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3433	83	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3020	57	Female	Cecum	33
+coadread_dfci_2016_649	54	Male	Cecum	0
+coadread_dfci_2016_3444	73	Male	Cecum	0
+coadread_dfci_2016_3048	73	Female	Cecum	0
+coadread_dfci_2016_2272	82	Male	Ascending To Transverse Colon	0
+coadread_dfci_2016_3260	78	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2398	71	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3720	67	Female	Cecum	0
+coadread_dfci_2016_1767	76	Male	Rectum	5
+coadread_dfci_2016_228	69	Female	Ascending To Transverse Colon	0
+coadread_dfci_2016_2384	62	Female	Splenic Flexure To Sigmoid Colon	20
+coadread_dfci_2016_344232	75	Female	Rectum	NA
+coadread_dfci_2016_3101	76	Female	Rectum	0
+coadread_dfci_2016_3111	68	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_306835	72	Female	Splenic Flexure To Sigmoid Colon	NA
+coadread_dfci_2016_3436	79	Male	Cecum	0
+coadread_dfci_2016_3417	69	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3254	67	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3506	83	Male	Rectum	NA
+coadread_dfci_2016_3476	84	Male	Rectum	NA
+coadread_dfci_2016_610	69	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1245	56	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3270	77	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3226	75	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3079	74	Female	Rectum	NA
+coadread_dfci_2016_663	71	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3271	70	Female	Cecum	0
+coadread_dfci_2016_3563	67	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1246	71	Female	Rectum	5
+coadread_dfci_2016_3450	75	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_1854	80	Male	Rectum	0
+coadread_dfci_2016_353	63	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_283	55	Female	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3242	59	Male	Rectum	NA
+coadread_dfci_2016_2262	76	Male	Splenic Flexure To Sigmoid Colon	0
+coadread_dfci_2016_3512	66	Male	Cecum	0
+coadread_dfci_2016_2997	78	Female	Splenic Flexure To Sigmoid Colon	0
