@@ -1,0 +1,86 @@
+---
+title: "exploratory_data_tcga"
+author: "Patrick Garr"
+date: "2/17/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(psych)
+library(tidyverse)
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(readxl)
+```
+
+```{r}
+coad_tgca_data <- read.csv("coad_tgca_clinical_data.csv", sep = ",",
+         header = TRUE, stringsAsFactors = TRUE)
+
+
+tgca_df <- coad_tgca_data[c("Sample.ID", "Diagnosis.Age", "Neoplasm.Disease.Stage.American.Joint.Committee.on.Cancer.Code",  "Cancer.Type.Detailed", "Disease.Free.Status", "Ethnicity.Category", "Form.completion.date", "Fraction.Genome.Altered", "Patient.Height", "Prior.Cancer.Diagnosis.Occurence", "Year.Cancer.Initial.Diagnosis", "Is.FFPE",  "Mutation.Count", "Overall.Survival..Months.", "Overall.Survival.Status",  "Patient.Primary.Tumor.Site", "Race.Category", "Surgical.Margin.Resection.Status", "Sample.Initial.Weight", "Sample.Type", "Sex", "Longest.Dimension", "Shortest.Dimension", "Tumor.Tissue.Site", "Specimen.Second.Longest.Dimension", "Tissue.Source.Site", "Person.Neoplasm.Status", "Patient.Weight")]
+
+
+# tgca_df <- subset(tgca_data, select = c(Sample.ID, Diagnosis.Age, Neoplasm.Disease.Stage.American.Joint.Committee.on.Cancer.Code,  Cancer.Type.Detailed, Disease.Free.Status, Ethnicity.Category, Form.completion.date, Fraction.Genome.Altered, Patient.Height, Prior.Cancer.Diagnosis.Occurence, Year.Cancer.Initial.Diagnosis, Is.FFPE,  Mutation.Count, Overall.Survival..Months., Overall.Survival.Status,  Patient.Primary.Tumor.Site, Race.Category, Surgical.Margin.Resection.Status, Sample.Initial.Weight, Sample.Type, Sex, Longest.Dimension, Shortest.Dimension, Tumor.Tissue.Site, Specimen.Second.Longest.Dimension, Tissue.Source.Site, Person.Neoplasm.Status, Patient.Weight))
+
+tgca_df$Year.Cancer.Initial.Diagnosis <- as.factor(tgca_df$Year.Cancer.Initial.Diagnosis)
+summary(tgca_df)
+```
+
+```{r}
+
+boxplot1 <- ggplot(tgca_df, aes(Mutation.Count, Overall.Survival.Status))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='Mutation Count vs. Tumor Stage')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+boxplot2 <- ggplot(tgca_df, aes(Diagnosis.Age, Overall.Survival.Status))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='Diagnosis Age vs. Tumor Stage')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+mean_mut <- mean(tgca_df$Mutation.Count)
+sd_mut <- sd(tgca_df$Mutation.Count)
+
+mut_outliers <- filter(tgca_df, Mutation.Count > mean_mut + 3*sd_mut | Mutation.Count < mean_mut - 3*sd_mut)
+
+tgca_no_mut_outliers <- setdiff(tgca_df,mut_outliers)
+
+boxplot3 <- ggplot(tgca_no_mut_outliers, aes(Mutation.Count, Overall.Survival.Status))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='Mutation Count vs. Tumor Stage - No Outliers')+
+  theme(plot.title = element_text(hjust = 0.5))
+# 
+# mut_plot = ggplot(coad_df, aes(x=Patient.ID, fill = Mutation.Count))+
+#   geom_bar()+
+#   labs(title='Mutations by Patient')+
+#   theme(plot.title = element_text(hjust = 0.5))
+
+
+boxplot1
+boxplot2
+boxplot3
+
+
+```
+
+
+
+```{r}
+
+corr_tgca_df <- tgca_df[c("Diagnosis.Age", "Mutation.Count", "Overall.Survival..Months.", "Patient.Weight", "Patient.Height")]
+
+no_na_tgca_df <- na.omit(corr_tgca_df)
+
+agg_df_num <- no_na_tgca_df %>% count(Diagnosis.Age, Mutation.Count, Overall.Survival..Months., Patient.Height, Patient.Weight, sort = TRUE)
+corr_df <- subset(agg_df_num, select = -c(n))
+
+corrplot(cor(corr_df), method = 'number', title = "Correlation of Various Numeric Values", mar=c(0,0,1,0))
+
+```
