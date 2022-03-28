@@ -1,0 +1,216 @@
+---
+title: "mutation"
+author: "Sophie"
+date: "2022/3/5"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(readxl)
+library(psych) # Contains the winsor function and other helpful statistical tools
+library(tidyverse) # Remember from last homework that dplyr is included in tidyverse
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(utils)
+library(factoextra)
+library(MASS)
+library(ROCR)
+library(caret)
+library(gmodels)
+library(caTools)
+library(class)
+library(tree)
+set.seed(2022) # This simply sets random number generation (e.g. where the K-means clustering starts) to a constant, so these values wont change every single time you run the code
+```
+
+
+# Load the mutation data pre-processsed by "mutation.ipynb"
+This dataset has the first column as X(the sample ID), the last column as the overall survival status label.
+The columns in the middle indicate whether the specified gene is mutated in this sample. 1 means mutated; and 0 means not.
+X: the sample ID of the observation, used to link to the survival outcome
+status: The overall survive status of the patient that sampled from.
+other columns: whether this gene has mutation or not.1 is positive, 0 is negative.
+
+
+```{r}
+df <- read.csv("mutation_with_status.csv", sep = ",",
+         header = TRUE)
+
+head(df,2)
+
+```
+
+Look at the ratio of living and deceased.
+
+```{r}
+dfliving = filter(df, status=='0:LIVING')
+nrow(dfliving)
+dfdeceased = filter(df, status=='1:DECEASED')
+nrow(dfdeceased)
+```
+
+
+Extract the independent variables.
+
+```{r}
+df = subset(df, select = -c(X))
+df1 = subset(df, select = -c(status))
+head(df1,2)
+```
+
+# Unsupervised learning methods
+
+The data I used here is only 0 and 1, so I didn't scale or center them. (As they should contribute equally in the value)
+
+##  PCA analysis
+First, I looked at the PCA to see if I could do some dimensional deduction.
+I hope to see 
+
+```{r}
+df.pca <- prcomp(df1)
+# Checking output of pca. prcomp function returns standard deviation (sdev), rotation and loading
+names(df.pca)
+fviz_pca_biplot(df.pca)
+
+```
+
+```{r}
+summary(df.pca)
+```
+```{r}
+# Scree plot - Eigenvalues
+fviz_eig(df.pca, choice = "variance",
+addlabels=TRUE)
+
+```
+
+It seems that the elbow is at PC = 2. And only PC1 seem to contribute most to the variance.
+So I looked at the influence of different features to the PC1. 
+I choosed to look at the top20.
+
+```{r}
+fviz_contrib(df.pca, choice = "var", axes = 1, top = 20)
+```
+All these genes seem to contribute almost equally to the PC1. There is no gene mutation that contributes significantly to the PC1.
+
+## K means
+
+Then I tried K means to see if it has better performance.
+
+
+```{r}
+kmeansdf = kmeans(df1, center = 2)
+fviz_cluster(kmeansdf, df1)
+```
+It seems that Kmeans is not appropriate for clustering out dataset, and we could exam it quickly by the table function built in R.
+
+
+```{r}
+clusterTab_kmeans = table(kmeansdf$cluster, df$status)
+clusterTab_kmeans
+```
+
+
+It is obvious bad result. Kmeans is not appropriate for clustering out dataset.
+Maybe One important thing is it seems that The cluster are not sphere (even if it could be clustered).
+Try to use hierarchical clustering instead.
+
+## hierarchical clustering
+
+```{r}
+dist = dist(df1, method = "minkowski")
+fviz_dist(dist)
+
+
+```
+```{r}
+hcl = hclust(dist, method = "ward") # average is the most common one
+
+plot(hcl, cex = 0.6, hang = -1) # cex is a scale paramete
+```
+
+```{r}
+plot(hcl, cex = 0.6, hang = -1) # cex is a scale parameter
+rect.hclust(hcl, k = 2, border = "red")
+
+CutHcl = cutree(hcl, k = 2)
+print(length(CutHcl))
+print(length(df$statu))
+clusterTab = table(CutHcl, df$status)
+clusterTab
+
+```
+According to the analysis above, the hierarchical clustering is not working either.
+
+According to the analysis above using the unsupervised learning methods, it looks like the data couldn't be clustered well.
+
+Let's turn to supervised learning method instead.
+
+# Supervised learning method
+
+First, split the dataset to training and test. I use a 80:20 split ratio here as it is the most common ratio to use.
+
+```{r}
+msk = sample.split( df$status, SplitRatio = 0.8, group = NULL )
+train.data = df[ msk,]  # use output of sample.split to ...
+test.data  = df[!msk,]  # create train and test subsets
+
+nrow(train.data)
+nrow(test.data)
+```
+
+
+So there are 177 observations in training and 45 observations in test.
+
+## Linear regression/ logistic regression
+
+For the supervised learning method, I thought about starting with the most simple one, that is linear regression.
+I hope to use this as a baseline for other models.
+However, in my case, there is only binary value for each feature, I doubt linear regression or logistic regression will yield good performance.
+
+```{r}
+lrmod = lm(status ~ ., data = train.data)
+lrmod
+
+summary(lrmod)
+```
+
+
+```{r}
+plot(train_insurance$age, train_insurance$charges, col= 'green')
+abline(lrmod)
+
+plot(lrmod2$residuals, col = 'red')
+```
+
+I fail to fit the linear model here, but I don't know why.
+
+The decision tree might not be a good idea because we only have binary values.
+But here is what we could do if we want.
+
+## Decision tree
+
+```{r}
+data.tree = tree(status~., data = train.data)
+summary(data.tree)
+
+# One of the major benefits of decision trees is their interpretability, let's make a plot
+# of the tree we've made
+plot(data.tree)
+text(data.tree, pretty = 0)
+
+# One of the problems, however, is that they tend to overfit when used 'out of the box'
+treePred = predict(data.tree, test.data, type='class')
+confusionTab = table(Predicted = treePred, Actual = test.data$status)
+confusionTab
+
+```
+
+
+
+## Conclusion of the mutation analysis
+Maybe this is not a good idea to use gene mutation site as predictors to predict the survival status of the patients.
+
+
