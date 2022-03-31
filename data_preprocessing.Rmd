@@ -1,0 +1,94 @@
+---
+title: "data_preprocessing"
+author: "Yu_Miao"
+date: "3/31/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(psych) # Contains the winsor function and other helpful statistical tools
+library(tidyverse) # Remember from last homework that dplyr is included in tidyverse
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(utils)
+library(factoextra)
+set.seed(2022) # This simply sets random number generation (e.g. where the K-means clustering starts) to a constant, so these values wont change every single time you run the code
+```
+
+```{r}
+df = read.csv("breast-cancer.csv")
+df = df[,-c(1)]
+head(df,10)
+summary(df)
+```
+```{r}
+df$diagnosis <- as.factor(df$diagnosis)
+benign_ratio = nrow(filter(df,df$diagnosis == 'B')) / nrow(df)
+malignant_ratio = nrow(filter(df,df$diagnosis == 'M')) / nrow(df)
+print(paste0("The ratio of benign observation is ", benign_ratio))
+print(paste0("The ratio of malignant observation is ", malignant_ratio))
+```
+
+```{r}
+l1 = df[,c(2:31)]
+M = cor(l1)
+corrplot(as.matrix(M), method = "number")
+```
+```{r}
+df %>% 
+    pivot_longer(cols = -diagnosis, names_to = 'param') %>%
+    ggplot(aes(x = value, y = diagnosis)) +
+    geom_point() +
+    geom_smooth() +
+    facet_wrap(~param, scales = 'free_x')  +
+    labs(
+        title = 'Trends in each parameter',
+        x = 'Parameters',
+        y = 'Values'
+    )
+
+```
+```{r}
+data_cleaned_stand = df
+data_cleaned_stand[2:31] = scale(data_cleaned_stand[2:31], scale=TRUE, center=TRUE) # Scaling our data
+
+idx = sample(nrow(data_cleaned_stand), nrow(data_cleaned_stand)*0.8)
+train = as.data.frame((data_cleaned_stand[idx,])) 
+test = as.data.frame(data_cleaned_stand[-idx,])
+print(paste0('Number of rows of training set: ', nrow(train)))
+print(paste0('Number of rows of testing set: ', nrow(test)))
+
+```
+
+```{r}
+library(MASS)
+library(caTools)
+lda_model <- lda(diagnosis~., data = train)
+lda_model
+summary(lda_model)
+
+```
+```{r}
+data_cleaned_stand[,2:31]
+```
+```{r}
+indep_data = data_cleaned_stand[, 2:31]
+pca = prcomp(indep_data, scale = TRUE)
+plot(pca)
+summary(pca)
+biplot(pca)
+
+
+```
+```{r}
+get_eig(pca)
+pca_load = pca$rotation
+pca_load
+```
+```{r}
+high_10 = sort(abs(pca_load[,1]),decreasing = TRUE)[1:10]
+high_10
+```
+## Conclusion: Variables bringing high variance top 10: concave.points_mean, concavity_mean concave.points_worst, compactness_mean, perimeter_worst, concavity_worst, radius_worst, perimeter_mean, area_worst, area_mean 
