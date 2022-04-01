@@ -1,0 +1,157 @@
+---
+title: "breast_cancer"
+author: "Patrick Garr"
+date: '2022-04-01'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(caret)
+library(tidyverse)
+library(corrplot)
+library(car)
+library(lmtest)
+library(MLmetrics)
+library(glmnet)
+library(caTools)
+library(splines)
+library(psych)
+library(mgcv)
+library(graphics)
+library(relaimpo) # Package for calculating relative importance metrics
+library(gridExtra)
+library(factoextra)
+
+set.seed(1000)
+```
+
+```{r}
+
+bc.data <- read.csv("breast_cancer_data.csv", sep = ",",
+         header = TRUE, stringsAsFactors = TRUE)
+
+bc.data$id <- as.factor(bc.data$id)
+
+bc.data <- bc.data[,-1]
+bc.data <- bc.data[,-32]
+
+nrows.LE <- nrow(bc.data)
+ncol.LE <- length(bc.data)
+
+print(paste("There are",nrows.LE, "rows and",ncol.LE, "columns in the breast cancer dataset"))
+
+summary(bc.data)
+
+```
+
+
+```{r}
+
+boxplot1 <- ggplot(bc.data, aes(radius_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='radius vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot2 <- ggplot(bc.data, aes(texture_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='texture vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot3 <- ggplot(bc.data, aes(perimeter_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='perimeter vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot4 <- ggplot(bc.data, aes(area_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='area vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot5 <- ggplot(bc.data, aes(smoothness_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='smoothness vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot6 <- ggplot(bc.data, aes(compactness_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='compactness vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot7 <- ggplot(bc.data, aes(concavity_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='concavity vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot8 <- ggplot(bc.data, aes(concave.points_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='concave points vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot9 <- ggplot(bc.data, aes(symmetry_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='symmetry vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+boxplot10 <- ggplot(bc.data, aes(fractal_dimension_mean, diagnosis))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='fractal dimension vs. diagnosis ')+
+  theme(plot.title = element_text(hjust = 0.5, size = 6))
+
+grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxplot8,boxplot9,boxplot10, ncol=4, nrow =3)
+
+```
+
+
+```{r}
+
+bc.data$diagnosis <- as.character(bc.data$diagnosis)
+bc.data$diagnosis <- replace(bc.data$diagnosis, bc.data$diagnosis == "B","1")
+bc.data$diagnosis <- replace(bc.data$diagnosis, bc.data$diagnosis == "M","0")
+bc.data$diagnosis <- as.factor(bc.data$diagnosis)
+
+bc.df <- bc.data
+bc.df[2:31] <- scale(bc.df[2:31])
+
+idx = sample(nrow(bc.df),nrow(bc.df)*0.8)
+
+train.df = as.data.frame((bc.df[idx,]))
+test.df = as.data.frame(bc.df[-idx,])
+
+train.labels <- train.df[,1]
+test.labels <- test.df[,1]
+
+```
+
+```{r}
+
+lda.bc = lda(diagnosis ~., data = train.df)
+lda.bc
+
+```
+
+```{r}
+
+pred.lda1 = predict(lda.bc, train.df)
+pred.lda2 = predict(lda.bc, test.df)
+
+confmat1 <- confusionMatrix(pred.lda1$class, train.labels)
+confmat2 <- confusionMatrix(pred.lda2$class, test.labels)
+
+confmat1
+confmat2
+
+print(paste0("The misclassification rate of the training set is: ", (1-confmat1$overall[1])*100, "% and the rate of the test set is: ", (1-confmat2$overall[1])*100,"%"))
+print(paste0("The precision of the training set is: ", confmat1$byClass[5]*100, "% and the that of the test set is: ", confmat2$byClass[5]*100,"%"))
+
+```
