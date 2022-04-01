@@ -27,82 +27,81 @@ set.seed(1000)
 ```
 
 ```{r}
-
-bc.data <- read.csv("breast_cancer_data.csv", sep = ",",
+# Wisconsin diagnostic breast cancer dataset
+wdbc.data <- read.csv("wdbc.csv", sep = ",",
          header = TRUE, stringsAsFactors = TRUE)
 
-bc.data$id <- as.factor(bc.data$id)
+# Removing the id attribute as it's not needed for this analysis. Also removing unknown X variable with no data in it
+wdbc.data <- wdbc.data[,-1]
+wdbc.data <- wdbc.data[,-32]
 
-bc.data <- bc.data[,-1]
-bc.data <- bc.data[,-32]
-
-nrows.LE <- nrow(bc.data)
-ncol.LE <- length(bc.data)
+nrows.LE <- nrow(wdbc.data)
+ncol.LE <- length(wdbc.data)
 
 print(paste("There are",nrows.LE, "rows and",ncol.LE, "columns in the breast cancer dataset"))
 
-summary(bc.data)
+summary(wdbc.data)
 
 ```
 
 
 ```{r}
-
-boxplot1 <- ggplot(bc.data, aes(radius_mean, diagnosis))+
+# Creating a box plot examining the ten factors' means with diagnosis outcomes to get a simple graphical view
+boxplot1 <- ggplot(wdbc.data, aes(radius_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='radius vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot2 <- ggplot(bc.data, aes(texture_mean, diagnosis))+
+boxplot2 <- ggplot(wdbc.data, aes(texture_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='texture vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot3 <- ggplot(bc.data, aes(perimeter_mean, diagnosis))+
+boxplot3 <- ggplot(wdbc.data, aes(perimeter_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='perimeter vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot4 <- ggplot(bc.data, aes(area_mean, diagnosis))+
+boxplot4 <- ggplot(wdbc.data, aes(area_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='area vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot5 <- ggplot(bc.data, aes(smoothness_mean, diagnosis))+
+boxplot5 <- ggplot(wdbc.data, aes(smoothness_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='smoothness vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot6 <- ggplot(bc.data, aes(compactness_mean, diagnosis))+
+boxplot6 <- ggplot(wdbc.data, aes(compactness_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='compactness vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot7 <- ggplot(bc.data, aes(concavity_mean, diagnosis))+
+boxplot7 <- ggplot(wdbc.data, aes(concavity_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='concavity vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot8 <- ggplot(bc.data, aes(concave.points_mean, diagnosis))+
+boxplot8 <- ggplot(wdbc.data, aes(concave.points_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='concave points vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot9 <- ggplot(bc.data, aes(symmetry_mean, diagnosis))+
+boxplot9 <- ggplot(wdbc.data, aes(symmetry_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='symmetry vs. diagnosis ')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
-boxplot10 <- ggplot(bc.data, aes(fractal_dimension_mean, diagnosis))+
+boxplot10 <- ggplot(wdbc.data, aes(fractal_dimension_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
   coord_flip()+
   labs(title='fractal dimension vs. diagnosis ')+
@@ -115,18 +114,26 @@ grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxp
 
 ```{r}
 
-bc.data$diagnosis <- as.character(bc.data$diagnosis)
-bc.data$diagnosis <- replace(bc.data$diagnosis, bc.data$diagnosis == "B","1")
-bc.data$diagnosis <- replace(bc.data$diagnosis, bc.data$diagnosis == "M","0")
-bc.data$diagnosis <- as.factor(bc.data$diagnosis)
+# corrplot(cor(wdbc.data[,2:31]), method = 'circle', title = "Correlation Plot of Breast Cancer Dataset Variables", mar=c(0,0,1,0))
 
-bc.df <- bc.data
-bc.df[2:31] <- scale(bc.df[2:31])
+```
 
-idx = sample(nrow(bc.df),nrow(bc.df)*0.8)
 
-train.df = as.data.frame((bc.df[idx,]))
-test.df = as.data.frame(bc.df[-idx,])
+```{r}
+# Changing the benign and malignant diagnoses to 1 and 0, respectively
+wdbc.data$diagnosis <- as.character(wdbc.data$diagnosis)
+wdbc.data$diagnosis <- replace(wdbc.data$diagnosis, wdbc.data$diagnosis == "B","1")
+wdbc.data$diagnosis <- replace(wdbc.data$diagnosis, wdbc.data$diagnosis == "M","0")
+wdbc.data$diagnosis <- as.factor(wdbc.data$diagnosis)
+
+# Scaling and indexing data to create training and testing sets. Using 80% and 20% because dataset is a little on the small side
+wdbc.df <- wdbc.data
+wdbc.df[2:31] <- scale(wdbc.df[2:31])
+
+idx = sample(nrow(wdbc.df),nrow(wdbc.df)*0.8)
+
+train.df = as.data.frame((wdbc.df[idx,]))
+test.df = as.data.frame(wdbc.df[-idx,])
 
 train.labels <- train.df[,1]
 test.labels <- test.df[,1]
@@ -134,24 +141,116 @@ test.labels <- test.df[,1]
 ```
 
 ```{r}
+# Performing PCA to see if we can narrow down the features
+pr.wdbc <- prcomp(wdbc.df[2:31], scale=FALSE)
+get_eig(pr.wdbc)
+# 3 PCs explain 73% of the data, 5 PCs explain 85%, and 10 PCs explain 95%
 
-lda.bc = lda(diagnosis ~., data = train.df)
-lda.bc
+# Looking at the top variables in the top 3 PCs
+wdbc.load <- pr.wdbc$rotation
+PC1.top10 <- sort(abs(wdbc.load[,1]),decreasing = TRUE)[1:10]
+PC2.top10 <- sort(abs(wdbc.load[,2]),decreasing = TRUE)[1:10]
+PC3.top10 <- sort(abs(wdbc.load[,3]),decreasing = TRUE)[1:10]
+
+fviz_eig(pr.wdbc, addlabels = TRUE)
+# Significant elbow seen after the 2nd or 3rd PC
+
+fviz_pca_biplot(pr.wdbc, repel = TRUE)
+
+```
+```{r}
+# Hierarchical clustering: Euclidian method
+dist.wdbc1 = dist(wdbc.df[2:31], method = "euclidean")
+fviz_dist(dist.wdbc1)+
+  labs(title = "Euclidian Dissimilarity Matrix")
+
+hcl.wdbc1 <- hclust(dist.wdbc1, method = 'complete')
+plot(hcl.wdbc, cex = 0.6, hang = -1)
+rect.hclust(hcl.wdbc, k = 2, border = 'red')
+
+cutHcl1 = cutree(hcl.wdbc1, k = 2)
+clusterTab1 = table(cutHcl1, wdbc.df[,1])
+clusterTab1
+
+```
+```{r}
+# Hierarchical clustering: Euclidian method w/ larger k
+
+# Finding optimal number of ks using a for loop, commenting it after running
+# range <- c(1:10)
+# 
+# for (val in range) { 
+#   cutHcl = cutree(hcl.wdbc, k =val)
+#   clusterTab = table(cutHcl, wdbc.df[,1])
+#   print(clusterTab)
+#   print(paste0(val, " Clusters"))}
+
+# Optimal clusters seems to be at 4 as that is where the largest difference in clusters occurs
+
+dist.wdbc2 = dist(wdbc.df[2:31], method = "euclidean")
+
+hcl.wdbc2 <- hclust(dist.wdbc2, method = 'complete')
+plot(hcl.wdbc2, cex = 0.6, hang = -1)
+rect.hclust(hcl.wdbc2, k = 4, border = 'red')
+
+cutHcl2 = cutree(hcl.wdbc2, k = 4)
+clusterTab2 = table(cutHcl2, wdbc.df[,1])
+clusterTab2
 
 ```
 
 ```{r}
+# Hierarchical clustering: Manhattan method
+
+dist.wdbc3 = dist(wdbc.df[2:31], method = "manhattan")
+
+hcl.wdbc3 <- hclust(dist.wdbc3, method = 'ward.D')
+plot(hcl.wdbc3, cex = 0.6, hang = -1)
+rect.hclust(hcl.wdbc3, k = 2, border = 'red')
+
+cutHcl3 = cutree(hcl.wdbc3, k = 2)
+clusterTab3 = table(cutHcl3, wdbc.df[,1])
+clusterTab3
+
+```
+
+
+```{r}
+
+lda.bc = lda(diagnosis ~., data = train.df)
 
 pred.lda1 = predict(lda.bc, train.df)
 pred.lda2 = predict(lda.bc, test.df)
 
-confmat1 <- confusionMatrix(pred.lda1$class, train.labels)
-confmat2 <- confusionMatrix(pred.lda2$class, test.labels)
+confmat.lda1 <- confusionMatrix(pred.lda1$class, train.labels)
+confmat.lda2 <- confusionMatrix(pred.lda2$class, test.labels)
 
-confmat1
-confmat2
+confmat.lda1
+confmat.lda2
 
-print(paste0("The misclassification rate of the training set is: ", (1-confmat1$overall[1])*100, "% and the rate of the test set is: ", (1-confmat2$overall[1])*100,"%"))
-print(paste0("The precision of the training set is: ", confmat1$byClass[5]*100, "% and the that of the test set is: ", confmat2$byClass[5]*100,"%"))
+# print(paste0("The misclassification rate of the training set is: ", (1-confmat.lda1$overall[1])*100, "% and the rate of the test set is: ", (1-confmat.lda2$overall[1])*100,"%"))
+# print(paste0("The precision of the training set is: ", confmat.lda1$byClass[5]*100, "% and the that of the test set is: ", confmat.lda2$byClass[5]*100,"%"))
+
+```
+
+
+```{r}
+# Logistic regression
+
+wdbc.log = glm(diagnosis ~., family = binomial, data = train.df)
+log.fit.cont = predict(wdbc.log, newdata = test.df, type = 'response')
+log.fit = ifelse(log.fit.cont > 0.5, '1', '0')
+
+log.fit.train = predict(wdbc.log, newdata = train.df, type = 'response')
+log.fit.train = ifelse(log.fit.train > 0.5, '1', '0')
+
+pred.log.train = as.factor(log.fit.train)
+pred.log.test = as.factor(log.fit)
+
+confmat.log1 <- confusionMatrix(pred.log.train, train.df[,1])
+confmat.log2 <- confusionMatrix(pred.log.test, test.df[,1])
+
+confmat.log1
+confmat.log2
 
 ```
