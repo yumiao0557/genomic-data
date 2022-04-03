@@ -26,6 +26,33 @@ library(factoextra)
 set.seed(1000)
 ```
 
+Dataset description (From Diagnostic Wisconsin Breast Cancer Database):
+
+1) ID number
+2) Diagnosis (M = malignant, B = benign)
+3-32)
+
+Ten real-valued features are computed for each cell nucleus:
+
+a) radius (mean of distances from center to points on the perimeter)
+b) texture (standard deviation of gray-scale values)
+c) perimeter
+d) area
+e) smoothness (local variation in radius lengths)
+f) compactness (perimeter^2 / area - 1.0)
+g) concavity (severity of concave portions of the contour)
+h) concave points (number of concave portions of the contour)
+i) symmetry
+j) fractal dimension ("coastline approximation" - 1)
+
+The mean, standard error and "worst" or largest (mean of the three
+largest values) of these features were computed for each image,
+resulting in 30 features. For instance, field 3 is Mean Radius, field
+13 is Radius SE, field 23 is Worst Radius.
+
+All feature values are recoded with four significant digits.
+
+
 ```{r}
 # Wisconsin diagnostic breast cancer dataset
 wdbc.data <- read.csv("wdbc.csv", sep = ",",
@@ -43,6 +70,7 @@ print(paste("There are",nrows.LE, "rows and",ncol.LE, "columns in the breast can
 summary(wdbc.data)
 
 ```
+
 
 
 ```{r}
@@ -165,8 +193,8 @@ fviz_dist(dist.wdbc1)+
   labs(title = "Euclidian Dissimilarity Matrix")
 
 hcl.wdbc1 <- hclust(dist.wdbc1, method = 'complete')
-plot(hcl.wdbc, cex = 0.6, hang = -1)
-rect.hclust(hcl.wdbc, k = 2, border = 'red')
+plot(hcl.wdbc1, cex = 0.6, hang = -1)
+rect.hclust(hcl.wdbc1, k = 2, border = 'red')
 
 cutHcl1 = cutree(hcl.wdbc1, k = 2)
 clusterTab1 = table(cutHcl1, wdbc.df[,1])
@@ -254,3 +282,53 @@ confmat.log1
 confmat.log2
 
 ```
+
+
+```{r}
+# Write a function to calculcate the misclassification rate
+cal_misclassification <- function(confusionTab){
+  misc = (confusionTab[1,2]+confusionTab[2,1])/sum(confusionTab)
+  print(paste("misclassification rate: ", misc))
+}
+
+```
+
+
+
+```{r}
+# Use a decision tree to find which features are more significant
+wdbc.tree = tree(diagnosis~., data =train.df)
+summary(pima.tree)
+
+
+# Make a plot of the tree to visulize
+plot(wdbc.tree)
+text(wdbc.tree, pretty = 0)
+
+# One of the problems, however, is that they tend to overfit when used 'out of the box'
+treePred = predict(wdbc.tree, test.df, type='class')
+confusionTab = table(Predicted = treePred, Actual = test.df$diagnosis)
+confusionTab
+cal_misclassification(confusionTab)
+
+```
+According to the confusion matrix, we could see that the misclassification rate is very low.
+
+
+```{r}
+# Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
+cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
+plot(cv.wdbc.tree)
+
+
+prune.wdbc = prune.misclass(wdbc.tree, best = 6)
+plot(prune.wdbc)
+text(prune.wdbc, pretty = 0)
+
+treePred2 = predict(prune.wdbc, test.df, type='class')
+confusionTab2 = table(Predicted = treePred2, Actual = test.df$diagnosis)
+confusionTab2
+
+cal_misclassification(confusionTab2)
+```
+We could see that the model has smaller size with same misclassification rate now.
