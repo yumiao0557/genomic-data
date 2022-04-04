@@ -521,4 +521,15 @@ confusionMatrix(pred.lasso, test.labels.reg.fact)
 
 ``` 
 
+```{r}
+# GAM
+gam.mod <- gam(diagnosis ~ s(radius_worst) + s(area_worst) + s(perimeter_worst) + s(concave.points_mean) + s(concave.points_worst), data = train.df.reg)
+summary(gam.mod)
+
+gam.pred <- predict(gam.mod,test.df.reg)
+gam.pred <- ifelse(gam.pred > 0, '1', '-1')
+gam.pred <- as.factor(gam.pred) 
+confusionMatrix(gam.pred, test.labels.reg.fact)
+
+```
 
