@@ -22,36 +22,15 @@ library(graphics)
 library(relaimpo) # Package for calculating relative importance metrics
 library(gridExtra)
 library(factoextra)
+library(ROCR)
+library(MASS)
+library(gmodels)
+library(class)
+library(e1071) # Used for SVM model
+library(mlbench) # Used for LVQ model
 
 set.seed(1000)
 ```
-
-Dataset description (From Diagnostic Wisconsin Breast Cancer Database):
-
-1) ID number
-2) Diagnosis (M = malignant, B = benign)
-3-32)
-
-Ten real-valued features are computed for each cell nucleus:
-
-a) radius (mean of distances from center to points on the perimeter)
-b) texture (standard deviation of gray-scale values)
-c) perimeter
-d) area
-e) smoothness (local variation in radius lengths)
-f) compactness (perimeter^2 / area - 1.0)
-g) concavity (severity of concave portions of the contour)
-h) concave points (number of concave portions of the contour)
-i) symmetry
-j) fractal dimension ("coastline approximation" - 1)
-
-The mean, standard error and "worst" or largest (mean of the three
-largest values) of these features were computed for each image,
-resulting in 30 features. For instance, field 3 is Mean Radius, field
-13 is Radius SE, field 23 is Worst Radius.
-
-All feature values are recoded with four significant digits.
-
 
 ```{r}
 # Wisconsin diagnostic breast cancer dataset
@@ -70,7 +49,6 @@ print(paste("There are",nrows.LE, "rows and",ncol.LE, "columns in the breast can
 summary(wdbc.data)
 
 ```
-
 
 
 ```{r}
@@ -142,9 +120,12 @@ grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxp
 
 ```{r}
 
-# corrplot(cor(wdbc.data[,2:31]), method = 'circle', title = "Correlation Plot of Breast Cancer Dataset Variables", mar=c(0,0,1,0))
+corrplot(cor(wdbc.data[,2:31]), method = 'circle', title = "Correlation Plot of Breast Cancer Dataset Variables", mar=c(0,0,1,0))
+# wdbc.matrix <- as.matrix(wdbc.data[,2:31])
+# heatmap(wdbc.matrix)
 
 ```
+
 
 
 ```{r}
@@ -154,17 +135,31 @@ wdbc.data$diagnosis <- replace(wdbc.data$diagnosis, wdbc.data$diagnosis == "B","
 wdbc.data$diagnosis <- replace(wdbc.data$diagnosis, wdbc.data$diagnosis == "M","0")
 wdbc.data$diagnosis <- as.factor(wdbc.data$diagnosis)
 
-# Scaling and indexing data to create training and testing sets. Using 80% and 20% because dataset is a little on the small side
+# Scaling and indexing data to create training and testing sets. Using 70% split
 wdbc.df <- wdbc.data
 wdbc.df[2:31] <- scale(wdbc.df[2:31])
 
-idx = sample(nrow(wdbc.df),nrow(wdbc.df)*0.8)
+idx <- sample(nrow(wdbc.df),nrow(wdbc.df)*0.7)
 
-train.df = as.data.frame((wdbc.df[idx,]))
-test.df = as.data.frame(wdbc.df[-idx,])
+train.df <- as.data.frame((wdbc.df[idx,]))
+test.df1 <- as.data.frame(wdbc.df[-idx,])
+test.df <- test.df1[,-c(1)]
 
 train.labels <- train.df[,1]
-test.labels <- test.df[,1]
+test.labels <- test.df1[,1]
+
+```
+
+```{r}
+# Feature selection with R caret using a Learning Vector Quantization model
+# Prepare the training scheme with repeated cross-validation method
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+lvq.wdbc <- train(diagnosis~., data=wdbc.data, method="lvq", preProcess="scale", trControl=control)
+
+# Use the model to estimate relative importances
+importance <- varImp(lvq.wdbc, scale=FALSE)
+print(importance)
+plot(importance)
 
 ```
 
@@ -186,6 +181,28 @@ fviz_eig(pr.wdbc, addlabels = TRUE)
 fviz_pca_biplot(pr.wdbc, repel = TRUE)
 
 ```
+
+```{r}
+# k-means clustering
+
+# Determining the optimal number of clusters using two methods
+fviz_nbclust(wdbc.df[2:31], kmeans, method ="wss") +
+  labs(subtitle = "Wss Method")
+fviz_nbclust(wdbc.df[2:31], kmeans, method ="silhouette")+
+  labs(subtitle = "Silhouette Method")
+# Both methods indicate that 2 clusters is enough 
+
+kmeans.wdbc = kmeans(wdbc.df[2:31], center = 2)
+# kmeans_df3
+
+fviz_cluster(kmeans.wdbc, wdbc.df[2:31])+
+  labs(subtitle = "k-means Model of Breast Cancer Data with 2 Clusters")
+
+table(kmeans.wdbc$cluster,wdbc.df$diagnosis)
+
+```
+
+
 ```{r}
 # Hierarchical clustering: Euclidian method
 dist.wdbc1 = dist(wdbc.df[2:31], method = "euclidean")
@@ -201,6 +218,8 @@ clusterTab1 = table(cutHcl1, wdbc.df[,1])
 clusterTab1
 
 ```
+
+
 ```{r}
 # Hierarchical clustering: Euclidian method w/ larger k
 
@@ -241,9 +260,52 @@ clusterTab3 = table(cutHcl3, wdbc.df[,1])
 clusterTab3
 
 ```
+```{r}
+# Write a function to calculcate the misclassification rate
+cal_misclassification <- function(confusionTab){
+  misc = (confusionTab[1,2]+confusionTab[2,1])/sum(confusionTab)
+  print(paste("misclassification rate: ", misc))
+}
+```
+
 
 
 ```{r}
+library(tree)
+
+# Use a decision tree to find which features are more significant
+wdbc.tree = tree(diagnosis~., data =train.df)
+summary(wdbc.tree)
+# Make a plot of the tree to visulize
+plot(wdbc.tree)
+text(wdbc.tree, pretty = 0)
+# One of the problems, however, is that they tend to overfit when used 'out of the box'
+treePred = predict(wdbc.tree, test.df, type='class')
+confusionTab = table(Predicted = treePred, Actual = test.labels)
+confusionTab
+cal_misclassification(confusionTab)
+```
+According to the confusion matrix, we could see that the misclassification rate is very low.
+
+
+```{r}
+# Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
+cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
+plot(cv.wdbc.tree)
+prune.wdbc = prune.misclass(wdbc.tree, best = 6)
+plot(prune.wdbc)
+text(prune.wdbc, pretty = 0)
+treePred2 = predict(prune.wdbc, test.df, type='class')
+confusionTab2 = table(Predicted = treePred2, Actual = test.labels)
+confusionTab2
+cal_misclassification(confusionTab2)
+```
+We could see that the model has smaller size with same misclassification rate now.
+
+
+
+```{r}
+# LDA
 
 lda.bc = lda(diagnosis ~., data = train.df)
 
@@ -256,8 +318,17 @@ confmat.lda2 <- confusionMatrix(pred.lda2$class, test.labels)
 confmat.lda1
 confmat.lda2
 
-# print(paste0("The misclassification rate of the training set is: ", (1-confmat.lda1$overall[1])*100, "% and the rate of the test set is: ", (1-confmat.lda2$overall[1])*100,"%"))
-# print(paste0("The precision of the training set is: ", confmat.lda1$byClass[5]*100, "% and the that of the test set is: ", confmat.lda2$byClass[5]*100,"%"))
+# Making ROC curves for better visualization of the data
+ROC.df.lda <- data.frame(pred.lda2$posterior[,2])
+ROC.df.lda$labels <- test.labels
+
+ROC.pred.lda <- prediction(ROC.df.lda[1],ROC.df.lda[2])
+ROC.perf.lda <- performance(ROC.pred.lda, "tpr","fpr")
+plot(ROC.perf.lda, main = "ROC Curve of LDA Model")
+
+auc.lda <- performance(ROC.pred.lda, measure = 'auc')
+auc.lda <- auc.lda@y.values
+print(paste("The AUC of this curve is:", auc.lda))
 
 ```
 
@@ -275,60 +346,179 @@ log.fit.train = ifelse(log.fit.train > 0.5, '1', '0')
 pred.log.train = as.factor(log.fit.train)
 pred.log.test = as.factor(log.fit)
 
-confmat.log1 <- confusionMatrix(pred.log.train, train.df[,1])
-confmat.log2 <- confusionMatrix(pred.log.test, test.df[,1])
+confmat.log1 <- confusionMatrix(pred.log.train, train.labels)
+confmat.log2 <- confusionMatrix(pred.log.test, test.labels)
 
 confmat.log1
 confmat.log2
 
+# Making ROC curves for better visualization of the data
+ROC.log <- data.frame(log.fit.cont)
+ROC.log$labels <- test.labels
+
+ROC.pred.log <- prediction(ROC.log[1],ROC.log[2])
+ROC.perf.log <- performance(ROC.pred.log, "tpr","fpr")
+plot(ROC.perf.log, main = "ROC Curve of Logistic Regression Model")
+
+auc.log <- performance(ROC.pred.log, measure = 'auc')
+auc.log <- auc.log@y.values
+print(paste("The AUC of this curve is:", auc.log))
+
 ```
 
-
 ```{r}
-# Write a function to calculcate the misclassification rate
-cal_misclassification <- function(confusionTab){
-  misc = (confusionTab[1,2]+confusionTab[2,1])/sum(confusionTab)
-  print(paste("misclassification rate: ", misc))
+# knn model
+
+# Determining best k using a for loop to create multiple models and compare their accuracy values
+# Initialize the dataframe
+acc.df <- as.data.frame(matrix(nrow=1,ncol=1))
+colnames(acc.df) <- c('knn value')
+
+for (i in 1:20) {
+  knn.wdbc <- knn(train.df,test.df1,train.labels, k = i)
+  knn.conf.mat <- confusionMatrix(knn.wdbc,test.labels)
+  acc.df$Accuracy <- knn.conf.mat$overall[1] # Adding the accuracy to a new row
+  new <- rep(knn.conf.mat$overall[1], ncol(acc.df))                       
+  acc.df[nrow(acc.df) + 1, ] <- new
 }
 
+# Cleaning up the dataframe
+colnames(acc.df) <- c('Accuracy', 'KNN Value')
+acc.df <- acc.df[-c(1),]
+acc.df$`KNN Value` <- c(1:20)
+acc.df<- acc.df[order(-acc.df$Accuracy),] # Sorting in descending order to see
+head(acc.df)                              # best value for model
+
+# Multiple values give the same accuracy so choosing 10 for the model to keep it flexible for other datasets if needed
+
+knn.wdbc.best <- knn(train.df,test.df1,train.labels, k = 10)
+confusionMatrix(knn.wdbc.best,test.labels)
+
 ```
 
 
 
 ```{r}
-# Use a decision tree to find which features are more significant
-wdbc.tree = tree(diagnosis~., data =train.df)
-summary(pima.tree)
+library(kernlab)
+# SVM model
 
+# Prepare the training scheme with repeated cross-validation method
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+svm.linear <- train(diagnosis ~., train.df, method = "svmLinear", trControl=control, tuneLength = 10)
+svm.linear
 
-# Make a plot of the tree to visulize
-plot(wdbc.tree)
-text(wdbc.tree, pretty = 0)
+pred.svm1 <- predict(svm.linear, test.df)
+confusionMatrix(pred.svm1, test.labels)
 
-# One of the problems, however, is that they tend to overfit when used 'out of the box'
-treePred = predict(wdbc.tree, test.df, type='class')
-confusionTab = table(Predicted = treePred, Actual = test.df$diagnosis)
-confusionTab
-cal_misclassification(confusionTab)
+# Using grid search to tune the SVM classifier with different cost values
+grid <- expand.grid(C = c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,3))
+svm.linear.grid <- train(diagnosis ~., train.df, method = "svmLinear", trControl=control, tuneGrid = grid, tuneLength = 10)
+svm.linear.grid
+plot(svm.linear.grid)
+
+pred.svm2 <- predict(svm.linear.grid, test.df)
+confusionMatrix(pred.svm2, test.labels)
 
 ```
-According to the confusion matrix, we could see that the misclassification rate is very low.
-
 
 ```{r}
-# Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
-cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
-plot(cv.wdbc.tree)
+# Regularization: Ridge regression
+
+reg.data <- wdbc.df
+
+# Changing the malignant diagnoses -1 for use in regularization
+reg.data$diagnosis <- as.character(reg.data$diagnosis)
+reg.data$diagnosis <- replace(reg.data$diagnosis, reg.data$diagnosis == "0","-1")
+reg.data$diagnosis <- as.numeric(reg.data$diagnosis)
+
+# Creating test and train sets for these regressions
+idx.reg <- sample(nrow(reg.data),nrow(reg.data)*0.7)
+
+train.df.reg <- as.data.frame((reg.data[idx.reg,]))
+test.df.reg <- as.data.frame(reg.data[-idx.reg,])
+
+train.labels.reg <- train.df.reg[,1]
+test.labels.reg <- test.df.reg[,1]
+# Creating test labels as factor for later use in prediction tables
+test.labels.reg.fact <- as.factor(test.labels.reg) 
+
+x.train = model.matrix(diagnosis~. , train.df.reg)
+y.train = train.labels.reg
+x.test = model.matrix(diagnosis~. , test.df.reg)
+y.test = test.labels.reg
 
 
-prune.wdbc = prune.misclass(wdbc.tree, best = 6)
-plot(prune.wdbc)
-text(prune.wdbc, pretty = 0)
+lambda.grid <- sort(exp(seq(log(0.001), log(10^5), length.out = 1000)), decreasing = TRUE)
 
-treePred2 = predict(prune.wdbc, test.df, type='class')
-confusionTab2 = table(Predicted = treePred2, Actual = test.df$diagnosis)
-confusionTab2
+ridge.glm <- glmnet(x.train, y.train, alpha = 0, lambda = lambda.grid)
+cv.ridge <- cv.glmnet(x.train, y.train, alpha = 0, lambda = lambda.grid)
+lmin.ridge <- cv.ridge$lambda.min
 
-cal_misclassification(confusionTab2)
+print(paste("The lambda min is:",lmin.ridge))
+plot(cv.ridge)
+
+coeff.ridge <- coef(ridge.glm,lmin.ridge) 
+
+# transform coefficient of glmnet and cvglmnet to data.frame
+coeffs.dt <- data.frame(name = coeff.ridge@Dimnames[[1]][coeff.ridge@i + 1], coefficient = coeff.ridge@x)
+
+#  reorder the variables in term of coefficients
+coeffs.dt <- arrange(coeffs.dt, coefficient)
+coeffs.dt
+
+L2.ridge <- norm(coeff.ridge, type = "2")
+print(paste("The L2 norm is:",L2.ridge))
+
+# visual representation of the coefficients
+ggplot(data = coeffs.dt) +
+  geom_col(aes(x = name, y = coefficient, fill = {coefficient > 0})) +
+  xlab(label = "") +
+  ggtitle(expression(paste("Ridge Coefficients with ", lambda, " = lmin"))) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") 
+
+pred.ridge <- predict(ridge.glm, s = lmin.ridge, newx = x.test)
+pred.ridge <- ifelse(pred.ridge > 0, '1', '-1')
+pred.ridge <- as.factor(pred.ridge) 
+confusionMatrix(pred.ridge, test.labels.reg.fact)
+
 ```
-We could see that the model has smaller size with same misclassification rate now.
+
+```{r}
+# Regularization: LASSO regression
+
+lasso.glm <- glmnet(x.train, y.train, alpha = 1, lambda = lambda.grid)
+cv.lasso <- cv.glmnet(x.train, y.train, alpha = 1, lambda = lambda.grid)
+lmin.lasso <- cv.lasso$lambda.min
+
+print(paste("The lambda min is:",lmin.lasso))
+plot(cv.lasso)
+
+L1.lasso <- norm(coeff.ridge, type = "1")
+print(paste("The L1 norm is:",L1.lasso))
+
+coeff.lasso <- coef(cv.lasso,lmin.lasso) 
+
+# transform coefficient of glmnet and cvglmnet to data.frame
+coeffs.dt2 <- data.frame(name = coeff.lasso@Dimnames[[1]][coeff.lasso@i + 1], coefficient = coeff.lasso@x)
+
+#  reorder the variables in term of coefficients
+coeffs.dt2 <- arrange(coeffs.dt2, coefficient)
+coeffs.dt2
+
+# visual representation of the coefficients
+ggplot(data = coeffs.dt2) +
+  geom_col(aes(x = name, y = coefficient, fill = {coefficient > 0})) +
+  xlab(label = "") +
+  ggtitle(expression(paste("Lasso Coefficients with ", lambda, " = lmin"))) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") 
+
+pred.lasso <- predict(lasso.glm, s = lmin.lasso, newx = x.test)
+pred.lasso <- ifelse(pred.lasso > 0, '1', '-1')
+pred.lasso <- as.factor(pred.lasso) 
+confusionMatrix(pred.lasso, test.labels.reg.fact)
+
+``` 
+
+
