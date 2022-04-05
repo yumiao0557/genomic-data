@@ -149,7 +149,7 @@ pt9 = ggplot(data = wdbc.data) +
 pt10 = ggplot(data = wdbc.data) +
     geom_histogram(aes(x = df$fractal_dimension_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = fractal_dimension_mean, y=..density..)) +
     labs(title='density function of fractal_dimension_mean', x='fractal_dimension_mean', y='density')
-grid.arrange(pt1,pt2,pt3,pt4,pt5,pt6,pt7,pt8,pt9,pt10, ncol=4, nrow =3)
+# grid.arrange(pt1,pt2,pt3,pt4,pt5,pt6,pt7,pt8,pt9,pt10, ncol=4, nrow =3)
 ```
 
 
@@ -321,6 +321,43 @@ confusionTab
 cal_misclassification(confusionTab)
 ```
 According to the confusion matrix, we could see that the misclassification rate is very low.
+
+```{r}
+
+
+# mtry is the number of variables randomly sampled at each split. The default is sqrt(p) for classification and p/3 for regression. ntree is default 500 and is the number of trees to grow. Setting too small might result in you not predicting the outcome of every input row but setting too large a value will make the model creation computationally intensive
+library(randomForest)
+wdbc.rf = randomForest(diagnosis~., data = train.df, mtry = 5.5, ntree = 500)
+wdbc.rf
+
+rfPreds = predict(wdbc.rf, test.df)
+rfPredDifference = (abs(rfPreds - test.df$diagnosis)/test.df$diagnosis)*100
+mean(rfPredDifference)
+
+plot(wdbc.rf)
+which.min(wdbc.rf$mse) # Provides the ntree with the lowest oob mse
+
+# After each iter, stepFactor determines how much mtry is inflated
+# improve indicates the amount that oob error must improve for the mtry search to continue
+tuner = tuneRF(wdbc.rf[1:31], train.df$diagnosis,
+               stepFactor = .5,
+               plot=T,
+               ntreeTry = 320,
+               improve = 0.1)
+
+# optRf = randomForest(Rings~., data = rfTrain, mtry = 2, ntree = 320)
+# optPreds = predict(optRf, rfTest)
+# with(rfTest, mean(Rings-optPreds)^2)
+# # Recall that our simple linear model had ~.52 R2 on our training data
+# 
+# varImpPlot(optRf,
+#            sort = T,
+#            n.var=8,
+#            main = 'Top Variables')
+# 
+# # Importance here is determined by a few things, but for classification GINI (a measure of node impurity) is used, and for regression, residual sum of squares is
+# importance(optRf)
+```
 
 
 ```{r}
