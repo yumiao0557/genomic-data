@@ -117,6 +117,41 @@ grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxp
 
 ```
 
+```{r}
+# Creating a density plot examining the ten factors' means
+pt1 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$radius_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = radius_mean, y=..density..)) +
+    labs(title='density function of radius_mean', x='radius_mean', y='density') 
+pt2 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$texture_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = texture_mean, y=..density..)) +
+    labs(title='density function of texture_mean', x='texture_mean', y='density')
+pt3 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$perimeter_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = perimeter_mean, y=..density..)) +
+    labs(title='density function of perimeter_mean', x='perimeter_mean', y='density')
+pt4 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$area_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = area_mean, y=..density..)) +
+    labs(title='density function of area_mean', x='area_mean', y='density')
+pt5 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$smoothness_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = smoothness_mean, y=..density..)) +
+    labs(title='density function of smoothness_mean', x='smoothness_mean', y='density')
+pt6 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$compactness_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = compactness_mean, y=..density..)) +
+    labs(title='density function of compactness_mean', x='compactness_mean', y='density')
+pt7 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$concavity_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = concavity_mean, y=..density..)) +
+    labs(title='density function of concavity_mean', x='concavity_mean', y='density')
+pt8 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$concave.points_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = concave.points_mean, y=..density..)) +
+    labs(title='density function of concave.points_mean', x='concave.points_mean', y='density')
+pt9 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$symmetry_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = symmetry_mean, y=..density..)) +
+    labs(title='density function of symmetry_mean', x='symmetry_mean', y='density')
+pt10 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = df$fractal_dimension_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = fractal_dimension_mean, y=..density..)) +
+    labs(title='density function of fractal_dimension_mean', x='fractal_dimension_mean', y='density')
+grid.arrange(pt1,pt2,pt3,pt4,pt5,pt6,pt7,pt8,pt9,pt10, ncol=4, nrow =3)
+```
+
 
 ```{r}
 
