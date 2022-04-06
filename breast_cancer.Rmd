@@ -337,6 +337,7 @@ According to the confusion matrix, we could see that the misclassification rate 
 set.seed(1)
 cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
 plot(cv.wdbc.tree)
+# The lowest misclassification and simplest model is node= 4.
 prune.wdbc = prune.misclass(wdbc.tree, best = 4)
 plot(prune.wdbc)
 text(prune.wdbc, pretty = 0)
