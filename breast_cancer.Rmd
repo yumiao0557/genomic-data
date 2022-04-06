@@ -362,8 +362,9 @@ optRf = randomForest(diagnosis~., data = train.tr, mtry = 7, ntree = 320)
 plot(optRf)
 importance(optRf)
 varImpPlot(optRf)
-
-
+pred.rf = predict(optRf, test.tr)
+confusionMatrix(pred.rf, test.labels.tr)
+```
 
 ```{r}
 # LDA
