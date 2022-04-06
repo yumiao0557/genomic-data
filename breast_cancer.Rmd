@@ -294,36 +294,74 @@ cal_misclassification <- function(confusionTab){
 
 
 ```{r}
-library(tree)
+set.seed(1)
+# use unscaled data
+train.tr <- as.data.frame((wdbc.data[idx,]))
+test.tr1 <- as.data.frame(wdbc.data[-idx,])
+test.tr <- test.tr1[,-c(1)]
+train.labels <- train.df[,1]
+test.labels.tr <- test.tr1[,1]
 
+library(tree)
 # Use a decision tree to find which features are more significant
-wdbc.tree = tree(diagnosis~., data =train.df)
+wdbc.tree = tree(diagnosis~., data =train.tr)
 summary(wdbc.tree)
 # Make a plot of the tree to visulize
 plot(wdbc.tree)
 text(wdbc.tree, pretty = 0)
 # One of the problems, however, is that they tend to overfit when used 'out of the box'
-treePred = predict(wdbc.tree, test.df, type='class')
-confusionTab = table(Predicted = treePred, Actual = test.labels)
+treePred = predict(wdbc.tree, test.tr, type='class')
+confusionTab = table(Predicted = treePred, Actual = test.labels.tr)
 confusionTab
 cal_misclassification(confusionTab)
+
+confusionMatrix(treePred,test.labels.tr)
 ```
 According to the confusion matrix, we could see that the misclassification rate is very low.
 
 
 ```{r}
 # Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
+set.seed(1)
 cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
 plot(cv.wdbc.tree)
-prune.wdbc = prune.misclass(wdbc.tree, best = 6)
+# The lowest misclassification and simplest model is node= 4.
+prune.wdbc = prune.misclass(wdbc.tree, best = 4)
 plot(prune.wdbc)
 text(prune.wdbc, pretty = 0)
-treePred2 = predict(prune.wdbc, test.df, type='class')
-confusionTab2 = table(Predicted = treePred2, Actual = test.labels)
-confusionTab2
-cal_misclassification(confusionTab2)
+treePred2 = predict(prune.wdbc, test.tr, type='class')
+# confusionTab2 = table(Predicted = treePred2, Actual = test.labels.tr)
+# confusionTab2
+# cal_misclassification(confusionTab2)
+confusionMatrix(treePred2, test.labels.tr)
 ```
 We could see that the model has smaller size with same misclassification rate now.
+
+
+```{r}
+
+# mtry is the number of variables randomly sampled at each split. Use sqrt(p) here for classification
+library(randomForest)
+wdbc.rf = randomForest(diagnosis~., data = train.tr, mtry = sqrt(ncol(train.tr)), ntree = 500)
+wdbc.rf
+
+rfPreds = predict(wdbc.rf, test.tr)
+
+
+plot(wdbc.rf)
+summary(wdbc.rf)
+importance(wdbc.rf)
+varImpPlot(wdbc.rf)
+
+
+bestmtry <- tuneRF(train.tr[2:31], train.tr$diagnosis, stepFactor=1.5, improve=1e-5, ntree=500)
+print(bestmtry)
+
+# Use the best mtry
+optRf = randomForest(diagnosis~., data = train.tr, mtry = 7, ntree = 320)
+plot(optRf)
+importance(optRf)
+varImpPlot(optRf)
 
 
 
