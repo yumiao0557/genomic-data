@@ -1,0 +1,60 @@
+---
+title: "tcga_top3_genes"
+author: "Patrick Garr"
+date: '2022-03-22'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(psych)
+library(tidyverse)
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(readxl)
+library(MASS)
+library(ROCR)
+library(caret)
+library(gmodels)
+library(caTools)
+library(class)
+library(gridExtra)
+library(factoextra)
+
+set.seed(210)
+```
+
+```{r}
+tcga.gene.data <- read.csv("top3_genes_tcga.csv", sep = ",",
+         header = TRUE, stringsAsFactors = TRUE)
+
+empty.col <- sapply(tcga.gene.data, function(x) all(is.na(x) | x == ""))
+tcga.gene.data <- tcga.gene.data[, !empty.col]
+
+tcga.gene.df <- subset(tcga.gene.data, select = -c(Center, NCBI_Build, Strand, Verification_Status, Mutation_Status, Sequencing_Phase, Score, BAM_File, Hotspot, Drug_Target, Validation_Status_Note, COSMIC_Gene))
+
+tcga.gene.df$Chromosome <- as.factor(tcga.gene.df$Chromosome)
+tcga.gene.df$Entrez_Gene_Id <- as.factor(tcga.gene.df$Entrez_Gene_Id)
+tcga.gene.df$Start_Position <- as.factor(tcga.gene.df$Start_Position)
+tcga.gene.df$End_Position <- as.factor(tcga.gene.df$End_Position)
+
+summary(tcga.gene.df)
+
+```
+
+
+```{r}
+gene_plot1 = ggplot(tcga.gene.df, aes(x=Tumor_Sample_Barcode, fill=Hugo_Symbol))+
+  geom_bar()+
+  labs(title='Top 3 Genes Expressed for each Patient ID')+
+  theme(plot.title = element_text(hjust = 0.5))
+gene_plot1
+# 
+# gene_plot2 = ggplot(coad_gene_data, aes(x=Variant_Type, fill=Hugo_Symbol))+
+#   geom_bar()+
+#   labs(title='Top 3 Genes Variation Type')+
+#   theme(plot.title = element_text(hjust = 0.5))
+# gene_plot2
+```
