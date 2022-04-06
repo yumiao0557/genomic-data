@@ -51,105 +51,80 @@ summary(wdbc.data)
 ```
 
 
-```{r}
+```{r echo=FALSE}
 # Creating a box plot examining the ten factors' means with diagnosis outcomes to get a simple graphical view
 boxplot1 <- ggplot(wdbc.data, aes(radius_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='radius vs. diagnosis ')+
+  labs(title='Radius vs. Diagnosis', x = 'Radius', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot2 <- ggplot(wdbc.data, aes(texture_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='texture vs. diagnosis ')+
+  labs(title='Texture vs. Diagnosis', x = 'Texture', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot3 <- ggplot(wdbc.data, aes(perimeter_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='perimeter vs. diagnosis ')+
+  labs(title='Perimeter vs. Diagnosis', x = 'Perimeter', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot4 <- ggplot(wdbc.data, aes(area_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='area vs. diagnosis ')+
+  labs(title='Area vs. Diagnosis', x = 'Area', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot5 <- ggplot(wdbc.data, aes(smoothness_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='smoothness vs. diagnosis ')+
-  theme(plot.title = element_text(hjust = 0.5, size = 6))
+  labs(title='Smoothness vs. Diagnosis', x = 'Smoothness', y = 'Diagnosis')+
+  theme(plot.title = element_text(hjust = 0.5, size = 5))
 
 boxplot6 <- ggplot(wdbc.data, aes(compactness_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='compactness vs. diagnosis ')+
+  labs(title='Compactness vs. Diagnosis', x = 'Compactness', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot7 <- ggplot(wdbc.data, aes(concavity_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='concavity vs. diagnosis ')+
+  labs(title='Concavity vs. Diagnosis', x = 'Concavity', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot8 <- ggplot(wdbc.data, aes(concave.points_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='concave points vs. diagnosis ')+
+  labs(title='Concave Points vs. Diagnosis', x = 'Concave Points', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot9 <- ggplot(wdbc.data, aes(symmetry_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='symmetry vs. diagnosis ')+
+  labs(title='Symmetry vs. Diagnosis', x = 'Symmetry', y = 'Diagnosis')+
   theme(plot.title = element_text(hjust = 0.5, size = 6))
 
 boxplot10 <- ggplot(wdbc.data, aes(fractal_dimension_mean, diagnosis))+
   geom_boxplot(outlier.colour="red")+
+  theme_grey(base_size = 8)+
   coord_flip()+
-  labs(title='fractal dimension vs. diagnosis ')+
-  theme(plot.title = element_text(hjust = 0.5, size = 6))
+  labs(title='Fractal Dimension vs. Diagnosis', x = 'Fractal Dimension', y = 'Diagnosis')+
+  theme(plot.title = element_text(hjust = 0.5, size = 5))
 
-grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxplot8,boxplot9,boxplot10, ncol=4, nrow =3)
+grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxplot8,boxplot9,boxplot10, ncol=5, nrow =2, top = textGrob("Boxplots of Cell Nucleus Features (Mean Value)",gp=gpar(fontsize=15,font=3)))
 
-```
-
-```{r}
-# Creating a density plot examining the ten factors' means
-pt1 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$radius_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = radius_mean, y=..density..)) +
-    labs(title='density function of radius_mean', x='radius_mean', y='density') 
-pt2 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$texture_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = texture_mean, y=..density..)) +
-    labs(title='density function of texture_mean', x='texture_mean', y='density')
-pt3 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$perimeter_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = perimeter_mean, y=..density..)) +
-    labs(title='density function of perimeter_mean', x='perimeter_mean', y='density')
-pt4 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$area_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = area_mean, y=..density..)) +
-    labs(title='density function of area_mean', x='area_mean', y='density')
-pt5 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$smoothness_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = smoothness_mean, y=..density..)) +
-    labs(title='density function of smoothness_mean', x='smoothness_mean', y='density')
-pt6 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$compactness_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = compactness_mean, y=..density..)) +
-    labs(title='density function of compactness_mean', x='compactness_mean', y='density')
-pt7 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$concavity_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = concavity_mean, y=..density..)) +
-    labs(title='density function of concavity_mean', x='concavity_mean', y='density')
-pt8 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$concave.points_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = concave.points_mean, y=..density..)) +
-    labs(title='density function of concave.points_mean', x='concave.points_mean', y='density')
-pt9 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$symmetry_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = symmetry_mean, y=..density..)) +
-    labs(title='density function of symmetry_mean', x='symmetry_mean', y='density')
-pt10 = ggplot(data = wdbc.data) +
-    geom_histogram(aes(x = df$fractal_dimension_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = fractal_dimension_mean, y=..density..)) +
-    labs(title='density function of fractal_dimension_mean', x='fractal_dimension_mean', y='density')
-# grid.arrange(pt1,pt2,pt3,pt4,pt5,pt6,pt7,pt8,pt9,pt10, ncol=4, nrow =3)
 ```
 
 
@@ -185,23 +160,11 @@ test.labels <- test.df1[,1]
 
 ```
 
-```{r}
-# Feature selection with R caret using a Learning Vector Quantization model
-# Prepare the training scheme with repeated cross-validation method
-control <- trainControl(method="repeatedcv", number=10, repeats=3)
-lvq.wdbc <- train(diagnosis~., data=wdbc.data, method="lvq", preProcess="scale", trControl=control)
-
-# Use the model to estimate relative importances
-importance <- varImp(lvq.wdbc, scale=FALSE)
-print(importance)
-plot(importance)
-
-```
 
 ```{r}
 # Performing PCA to see if we can narrow down the features
 pr.wdbc <- prcomp(wdbc.df[2:31], scale=FALSE)
-get_eig(pr.wdbc)
+PCA.eig <- get_eig(pr.wdbc)
 # 3 PCs explain 73% of the data, 5 PCs explain 85%, and 10 PCs explain 95%
 
 # Looking at the top variables in the top 3 PCs
@@ -213,7 +176,21 @@ PC3.top10 <- sort(abs(wdbc.load[,3]),decreasing = TRUE)[1:10]
 fviz_eig(pr.wdbc, addlabels = TRUE)
 # Significant elbow seen after the 2nd or 3rd PC
 
-fviz_pca_biplot(pr.wdbc, repel = TRUE)
+fviz_pca_biplot(pr.wdbc, label="var", repel = TRUE) +
+   labs(title ="PCA Biplot of All Features", x = paste("PC1 -", round(PCA.eig$variance.percent[1],1),"%"), y = paste("PC2 -", round(PCA.eig$variance.percent[2],1),"%"))
+
+```
+
+```{r}
+# Feature selection with R caret using the Learning Vector Quantization method
+# Prepare the training scheme with repeated cross-validation method
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+lvq.wdbc <- train(diagnosis~., data=wdbc.df, method="lvq", trControl=control)
+
+# Use the model to estimate relative importances
+importance <- varImp(lvq.wdbc, scale=FALSE)
+plot(importance, main = "Variable Importances", ylab = "Features")
+
 
 ```
 
@@ -233,7 +210,9 @@ kmeans.wdbc = kmeans(wdbc.df[2:31], center = 2)
 fviz_cluster(kmeans.wdbc, wdbc.df[2:31])+
   labs(subtitle = "k-means Model of Breast Cancer Data with 2 Clusters")
 
-table(kmeans.wdbc$cluster,wdbc.df$diagnosis)
+kmeans.pred <- as.factor(kmeans.wdbc$cluster-1)
+confmat.kmeans <- confusionMatrix(kmeans.pred,wdbc.df[,1])
+confmat.kmeans
 
 ```
 
@@ -285,14 +264,23 @@ clusterTab2
 # Hierarchical clustering: Manhattan method
 
 dist.wdbc3 = dist(wdbc.df[2:31], method = "manhattan")
-
 hcl.wdbc3 <- hclust(dist.wdbc3, method = 'ward.D')
-plot(hcl.wdbc3, cex = 0.6, hang = -1)
+
+plot(hcl.wdbc3, cex = 0.6, hang = -1,
+     labels = FALSE,
+     main = "Hierarchical Clustering Dendrogram",
+     sub = "(Using the Manhattan Method)",
+     cex.sub = 0.75,
+     xlab = "Clusters")
 rect.hclust(hcl.wdbc3, k = 2, border = 'red')
 
+
 cutHcl3 = cutree(hcl.wdbc3, k = 2)
-clusterTab3 = table(cutHcl3, wdbc.df[,1])
-clusterTab3
+cutHcl3 <- as.factor(cutHcl3-1)
+# clusterTab3 = table(cutHcl3, wdbc.df[,1])
+# clusterTab3
+confmat.hcl <- confusionMatrix(cutHcl3,wdbc.df[,1])
+confmat.hcl
 
 ```
 ```{r}
@@ -306,75 +294,38 @@ cal_misclassification <- function(confusionTab){
 
 
 ```{r}
-set.seed(1)
-# use unscaled data
-train.tr <- as.data.frame((wdbc.data[idx,]))
-test.tr1 <- as.data.frame(wdbc.data[-idx,])
-test.tr <- test.tr1[,-c(1)]
-train.labels <- train.df[,1]
-test.labels.tr <- test.tr1[,1]
-
 library(tree)
+
 # Use a decision tree to find which features are more significant
-wdbc.tree = tree(diagnosis~., data =train.tr)
+wdbc.tree = tree(diagnosis~., data =train.df)
 summary(wdbc.tree)
 # Make a plot of the tree to visulize
 plot(wdbc.tree)
 text(wdbc.tree, pretty = 0)
 # One of the problems, however, is that they tend to overfit when used 'out of the box'
-treePred = predict(wdbc.tree, test.tr, type='class')
-confusionTab = table(Predicted = treePred, Actual = test.labels.tr)
+treePred = predict(wdbc.tree, test.df, type='class')
+confusionTab = table(Predicted = treePred, Actual = test.labels)
 confusionTab
 cal_misclassification(confusionTab)
-
-confusionMatrix(treePred,test.labels.tr)
 ```
 According to the confusion matrix, we could see that the misclassification rate is very low.
 
 
 ```{r}
 # Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
-set.seed(1)
 cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
 plot(cv.wdbc.tree)
-prune.wdbc = prune.misclass(wdbc.tree, best = 4)
+prune.wdbc = prune.misclass(wdbc.tree, best = 6)
 plot(prune.wdbc)
 text(prune.wdbc, pretty = 0)
-treePred2 = predict(prune.wdbc, test.tr, type='class')
-# confusionTab2 = table(Predicted = treePred2, Actual = test.labels.tr)
-# confusionTab2
-# cal_misclassification(confusionTab2)
-confusionMatrix(treePred2, test.labels.tr)
+treePred2 = predict(prune.wdbc, test.df, type='class')
+confusionTab2 = table(Predicted = treePred2, Actual = test.labels)
+confusionTab2
+cal_misclassification(confusionTab2)
 ```
 We could see that the model has smaller size with same misclassification rate now.
 
 
-```{r}
-
-# mtry is the number of variables randomly sampled at each split. Use sqrt(p) here for classification
-library(randomForest)
-wdbc.rf = randomForest(diagnosis~., data = train.tr, mtry = sqrt(ncol(train.tr)), ntree = 500)
-wdbc.rf
-
-rfPreds = predict(wdbc.rf, test.tr)
-
-
-plot(wdbc.rf)
-summary(wdbc.rf)
-importance(wdbc.rf)
-varImpPlot(wdbc.rf)
-
-
-bestmtry <- tuneRF(train.tr[2:31], train.tr$diagnosis, stepFactor=1.5, improve=1e-5, ntree=500)
-print(bestmtry)
-
-# Use the best mtry
-optRf = randomForest(diagnosis~., data = train.tr, mtry = 7, ntree = 320)
-plot(optRf)
-importance(optRf)
-varImpPlot(optRf)
-
-```
 
 ```{r}
 # LDA
@@ -464,7 +415,45 @@ head(acc.df)                              # best value for model
 # Multiple values give the same accuracy so choosing 10 for the model to keep it flexible for other datasets if needed
 
 knn.wdbc.best <- knn(train.df,test.df1,train.labels, k = 10)
-confusionMatrix(knn.wdbc.best,test.labels)
+confmat.knn <- confusionMatrix(knn.wdbc.best,test.labels)
+confmat.knn
+
+# Repeating above, but this time repeating with CV training control
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+
+acc.df.cv <- as.data.frame(matrix(nrow=1,ncol=1))
+colnames(acc.df.cv) <- c('knn value')
+
+for (i in 1:20) {
+  knn.cv <- train(diagnosis ~., 
+                    train.df,
+                    tuneGrid=data.frame(k=i), 
+                    method = "knn", 
+                    trControl=control)
+  pred.knn.cv <- predict(knn.cv, test.df)
+  knn.conf.mat.cv <- confusionMatrix(pred.knn.cv,test.labels)
+  acc.df.cv$Accuracy <- knn.conf.mat.cv$overall[1] # Adding accuracy to new row
+  new.cv <- rep(knn.conf.mat.cv$overall[1], ncol(acc.df.cv))                    
+  acc.df.cv[nrow(acc.df.cv) + 1, ] <- new.cv
+}
+
+# Cleaning up the dataframe
+colnames(acc.df.cv) <- c('Accuracy', 'KNN Value')
+acc.df.cv <- acc.df.cv[-c(1),]
+acc.df.cv$`KNN Value` <- c(1:20)
+acc.df.cv<- acc.df.cv[order(-acc.df.cv$Accuracy),] # Sorting in descending order
+head(acc.df.cv)                                    # to see best value for model
+
+# k = 11 gave the best accuracy
+knn.cv.best <- train(diagnosis ~., 
+                    train.df,
+                    tuneGrid=data.frame(k=11),
+                    method = "knn", 
+                    trControl=control)
+pred.knn.cv <- predict(knn.cv.best, test.df)
+confmat.knn.cv <- confusionMatrix(pred.knn.cv, test.labels)
+confmat.knn.cv
+# This produced a slightly lower classification rate, but was cross-validated to ensure repeatability
 
 ```
 
@@ -496,34 +485,24 @@ confusionMatrix(pred.svm2, test.labels)
 ```{r}
 # Regularization: Ridge regression
 
-reg.data <- wdbc.df
-
-# Changing the malignant diagnoses -1 for use in regularization
-reg.data$diagnosis <- as.character(reg.data$diagnosis)
-reg.data$diagnosis <- replace(reg.data$diagnosis, reg.data$diagnosis == "0","-1")
-reg.data$diagnosis <- as.numeric(reg.data$diagnosis)
-
-# Creating test and train sets for these regressions
-idx.reg <- sample(nrow(reg.data),nrow(reg.data)*0.7)
-
-train.df.reg <- as.data.frame((reg.data[idx.reg,]))
-test.df.reg <- as.data.frame(reg.data[-idx.reg,])
-
-train.labels.reg <- train.df.reg[,1]
-test.labels.reg <- test.df.reg[,1]
-# Creating test labels as factor for later use in prediction tables
-test.labels.reg.fact <- as.factor(test.labels.reg) 
-
-x.train = model.matrix(diagnosis~. , train.df.reg)
-y.train = train.labels.reg
-x.test = model.matrix(diagnosis~. , test.df.reg)
-y.test = test.labels.reg
+x.train = model.matrix(diagnosis~. , train.df)
+y.train = train.labels
+x.test = model.matrix(diagnosis~. , test.df1)
+y.test = test.labels
 
 
 lambda.grid <- sort(exp(seq(log(0.001), log(10^5), length.out = 1000)), decreasing = TRUE)
 
-ridge.glm <- glmnet(x.train, y.train, alpha = 0, lambda = lambda.grid)
-cv.ridge <- cv.glmnet(x.train, y.train, alpha = 0, lambda = lambda.grid)
+ridge.glm <- glmnet(x.train, 
+                    y.train, 
+                    alpha = 0, 
+                    lambda = lambda.grid,
+                    family = "binomial")
+cv.ridge <- cv.glmnet(x.train, 
+                      y.train, 
+                      alpha = 0, 
+                      lambda = lambda.grid,
+                      family = "binomial")
 lmin.ridge <- cv.ridge$lambda.min
 
 print(paste("The lambda min is:",lmin.ridge))
@@ -546,21 +525,30 @@ ggplot(data = coeffs.dt) +
   geom_col(aes(x = name, y = coefficient, fill = {coefficient > 0})) +
   xlab(label = "") +
   ggtitle(expression(paste("Ridge Coefficients with ", lambda, " = lmin"))) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "none") 
 
 pred.ridge <- predict(ridge.glm, s = lmin.ridge, newx = x.test)
-pred.ridge <- ifelse(pred.ridge > 0, '1', '-1')
+pred.ridge <- ifelse(pred.ridge > 0.5, '1', '0')
 pred.ridge <- as.factor(pred.ridge) 
-confusionMatrix(pred.ridge, test.labels.reg.fact)
+confusionMatrix(pred.ridge, test.labels)
 
 ```
 
 ```{r}
 # Regularization: LASSO regression
 
-lasso.glm <- glmnet(x.train, y.train, alpha = 1, lambda = lambda.grid)
-cv.lasso <- cv.glmnet(x.train, y.train, alpha = 1, lambda = lambda.grid)
+lasso.glm <- glmnet(x.train, 
+                    y.train, 
+                    alpha = 1, 
+                    lambda = lambda.grid, 
+                    family = "binomial")
+cv.lasso <- cv.glmnet(x.train, 
+                      y.train, 
+                      alpha = 1, 
+                      lambda = lambda.grid,
+                      family = "binomial")
 lmin.lasso <- cv.lasso$lambda.min
 
 print(paste("The lambda min is:",lmin.lasso))
@@ -582,26 +570,54 @@ coeffs.dt2
 ggplot(data = coeffs.dt2) +
   geom_col(aes(x = name, y = coefficient, fill = {coefficient > 0})) +
   xlab(label = "") +
-  ggtitle(expression(paste("Lasso Coefficients with ", lambda, " = lmin"))) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+  ggtitle(expression(paste("LASSO Coefficients with ", lambda, " = lmin"))) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "none") 
 
-pred.lasso <- predict(lasso.glm, s = lmin.lasso, newx = x.test)
-pred.lasso <- ifelse(pred.lasso > 0, '1', '-1')
+pred.lasso <- plogis(predict(lasso.glm, s = lmin.lasso, newx = x.test))
+pred.lasso <- ifelse(pred.lasso > 0.5, '1', '0')
 pred.lasso <- as.factor(pred.lasso) 
-confusionMatrix(pred.lasso, test.labels.reg.fact)
+confusionMatrix(pred.lasso, test.labels)
 
 ``` 
-
 ```{r}
+library(gamclass)
 # GAM
-gam.mod <- gam(diagnosis ~ s(radius_worst) + s(area_worst) + s(perimeter_worst) + s(concave.points_mean) + s(concave.points_worst), data = train.df.reg)
+# Running GAM using logit odds by using binomial family and restricted maximum likelihood (REML) method
+
+gam.mod <- gam(diagnosis ~ s(area_worst) +  s(texture_worst) + s(concave.points_worst),
+               data = train.df,
+               family = binomial,
+               method = "REML")
 summary(gam.mod)
 
-gam.pred <- predict(gam.mod,test.df.reg)
-gam.pred <- ifelse(gam.pred > 0, '1', '-1')
-gam.pred <- as.factor(gam.pred) 
-confusionMatrix(gam.pred, test.labels.reg.fact)
+# Calculate predictions, then convert to log odds
+gam.pred <- plogis(predict(gam.mod, test.df, type = "link"))
+
+# Using 0.5 as cutoff for classifier and sorting each sample for conf. table
+gam.pred <- ifelse(gam.pred > 0.5, '1', '0')
+gam.pred <- as.factor(gam.pred)
+confmat.gam <- confusionMatrix(gam.pred, test.labels)
+confmat.gam
+
+# Plotting partial effects of the GAM model on the probability scale, center on the intercept with intercept-related uncertainty
+plot(gam.mod, pages = 1, trans = plogis,
+     shift = coef(gam.mod)[1], seWithMean = TRUE)
+title(main = "Visualization of Partial Effects of GAM Model")
+
+```
+
+```{r}
+# GAM visualization using mgcViz library
+library(mgcViz)
+
+# Convert the fitted object to the gamViz class for use with mgcViz
+gam.mod2 <- getViz(gam.mod)
+# Calls print.plotGam()
+print(plot(gam.mod2), 
+      pages = 1,
+      top=textGrob("Visualization of Smoothing Effects of GAM Model")) 
 
 ```
 
