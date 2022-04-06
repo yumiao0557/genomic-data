@@ -306,6 +306,7 @@ cal_misclassification <- function(confusionTab){
 
 
 ```{r}
+set.seed(1)
 # use unscaled data
 train.tr <- as.data.frame((wdbc.data[idx,]))
 test.tr1 <- as.data.frame(wdbc.data[-idx,])
@@ -329,6 +330,24 @@ cal_misclassification(confusionTab)
 confusionMatrix(treePred,test.labels.tr)
 ```
 According to the confusion matrix, we could see that the misclassification rate is very low.
+
+
+```{r}
+# Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
+set.seed(1)
+cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
+plot(cv.wdbc.tree)
+prune.wdbc = prune.misclass(wdbc.tree, best = 4)
+plot(prune.wdbc)
+text(prune.wdbc, pretty = 0)
+treePred2 = predict(prune.wdbc, test.tr, type='class')
+# confusionTab2 = table(Predicted = treePred2, Actual = test.labels.tr)
+# confusionTab2
+# cal_misclassification(confusionTab2)
+confusionMatrix(treePred2, test.labels.tr)
+```
+We could see that the model has smaller size with same misclassification rate now.
+
 
 ```{r}
 
@@ -356,23 +375,6 @@ importance(optRf)
 varImpPlot(optRf)
 
 ```
-
-
-```{r}
-# Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
-cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
-plot(cv.wdbc.tree)
-prune.wdbc = prune.misclass(wdbc.tree, best = 6)
-plot(prune.wdbc)
-text(prune.wdbc, pretty = 0)
-treePred2 = predict(prune.wdbc, test.df, type='class')
-confusionTab2 = table(Predicted = treePred2, Actual = test.labels)
-confusionTab2
-cal_misclassification(confusionTab2)
-```
-We could see that the model has smaller size with same misclassification rate now.
-
-
 
 ```{r}
 # LDA
