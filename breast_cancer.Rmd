@@ -306,57 +306,55 @@ cal_misclassification <- function(confusionTab){
 
 
 ```{r}
-library(tree)
+# use unscaled data
+train.tr <- as.data.frame((wdbc.data[idx,]))
+test.tr1 <- as.data.frame(wdbc.data[-idx,])
+test.tr <- test.tr1[,-c(1)]
+train.labels <- train.df[,1]
+test.labels.tr <- test.tr1[,1]
 
+library(tree)
 # Use a decision tree to find which features are more significant
-wdbc.tree = tree(diagnosis~., data =train.df)
+wdbc.tree = tree(diagnosis~., data =train.tr)
 summary(wdbc.tree)
 # Make a plot of the tree to visulize
 plot(wdbc.tree)
 text(wdbc.tree, pretty = 0)
 # One of the problems, however, is that they tend to overfit when used 'out of the box'
-treePred = predict(wdbc.tree, test.df, type='class')
-confusionTab = table(Predicted = treePred, Actual = test.labels)
+treePred = predict(wdbc.tree, test.tr, type='class')
+confusionTab = table(Predicted = treePred, Actual = test.labels.tr)
 confusionTab
 cal_misclassification(confusionTab)
+
+confusionMatrix(treePred,test.labels.tr)
 ```
 According to the confusion matrix, we could see that the misclassification rate is very low.
 
 ```{r}
 
-
-# mtry is the number of variables randomly sampled at each split. The default is sqrt(p) for classification and p/3 for regression. ntree is default 500 and is the number of trees to grow. Setting too small might result in you not predicting the outcome of every input row but setting too large a value will make the model creation computationally intensive
+# mtry is the number of variables randomly sampled at each split. Use sqrt(p) here for classification
 library(randomForest)
-wdbc.rf = randomForest(diagnosis~., data = train.df, mtry = 5.5, ntree = 500)
+wdbc.rf = randomForest(diagnosis~., data = train.tr, mtry = sqrt(ncol(train.tr)), ntree = 500)
 wdbc.rf
 
-rfPreds = predict(wdbc.rf, test.df)
-rfPredDifference = (abs(rfPreds - test.df$diagnosis)/test.df$diagnosis)*100
-mean(rfPredDifference)
+rfPreds = predict(wdbc.rf, test.tr)
+
 
 plot(wdbc.rf)
-which.min(wdbc.rf$mse) # Provides the ntree with the lowest oob mse
+summary(wdbc.rf)
+importance(wdbc.rf)
+varImpPlot(wdbc.rf)
 
-# After each iter, stepFactor determines how much mtry is inflated
-# improve indicates the amount that oob error must improve for the mtry search to continue
-tuner = tuneRF(wdbc.rf[1:31], train.df$diagnosis,
-               stepFactor = .5,
-               plot=T,
-               ntreeTry = 320,
-               improve = 0.1)
 
-# optRf = randomForest(Rings~., data = rfTrain, mtry = 2, ntree = 320)
-# optPreds = predict(optRf, rfTest)
-# with(rfTest, mean(Rings-optPreds)^2)
-# # Recall that our simple linear model had ~.52 R2 on our training data
-# 
-# varImpPlot(optRf,
-#            sort = T,
-#            n.var=8,
-#            main = 'Top Variables')
-# 
-# # Importance here is determined by a few things, but for classification GINI (a measure of node impurity) is used, and for regression, residual sum of squares is
-# importance(optRf)
+bestmtry <- tuneRF(train.tr[2:31], train.tr$diagnosis, stepFactor=1.5, improve=1e-5, ntree=500)
+print(bestmtry)
+
+# Use the best mtry
+optRf = randomForest(diagnosis~., data = train.tr, mtry = 7, ntree = 320)
+plot(optRf)
+importance(optRf)
+varImpPlot(optRf)
+
 ```
 
 
