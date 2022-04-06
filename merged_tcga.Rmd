@@ -1,0 +1,35 @@
+---
+title: "merged_tcga"
+author: "Patrick Garr"
+date: '2022-03-23'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(psych)
+library(tidyverse)
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(readxl)
+library(MASS)
+library(ROCR)
+library(caret)
+library(gmodels)
+library(caTools)
+library(class)
+library(gridExtra)
+library(factoextra)
+library(knitr)
+
+set.seed(210)
+```
+
+```{r}
+
+merged.data <- merge(tcga.gene.df,tcga.clinical.df, by.x = "Tumor_Sample_Barcode", by.y = "Sample.ID")
+ID <- merged.data[1]
+unique(ID)
+```

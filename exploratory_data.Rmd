@@ -1,0 +1,155 @@
+---
+title: "exploratory_data_dfci"
+author: "Patrick Garr"
+date: "2/16/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(psych)
+library(tidyverse)
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(readxl)
+```
+
+```{r}
+coad2016_data <- read_excel("coadread_dfci_2016.xlsx")
+
+coad_data <- as.data.frame(unclass(coad2016_data),
+                       stringsAsFactors = TRUE)
+# summary(coad_data)
+
+coad_df <- subset(coad_data, select = -c(Study.ID, Sample.ID, Cancer.Type, Cancer.Type.Detailed, Oncotree.Code, Number.of.Samples.Per.Patient, Somatic.Status))
+summary(coad_df)
+# length(coad_df$Mutation.Count[!is.na(coad_df$TMB..nonsynonymous.)])
+
+coad_df2 <- coad_df[complete.cases(coad_df), ] 
+
+coad_df3 <- coad_df %>% drop_na(Diagnosis.Age)
+```
+
+```{r}
+
+boxplot1 <- ggplot(coad_df2, aes(Mutation.Count, Tumor.Stage))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='Mutation Count vs. Tumor Stage')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+boxplot3 <- ggplot(coad_df2, aes(Diagnosis.Age, Tumor.Stage))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='Diagnosis Age vs. Tumor Stage')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+mean_mut <- mean(coad_df2$Mutation.Count)
+sd_mut <- sd(coad_df2$Mutation.Count)
+
+mut_outliers <- filter(coad_df, Mutation.Count > mean_mut + 3*sd_mut | Mutation.Count < mean_mut - 3*sd_mut)
+
+coad_no_mut_outliers <- setdiff(coad_df2,mut_outliers)
+
+boxplot2 <- ggplot(coad_no_mut_outliers, aes(Mutation.Count, Tumor.Stage))+
+  geom_boxplot(outlier.colour="red")+
+  coord_flip()+
+  labs(title='Mutation Count vs. Tumor Stage - No Outliers')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+mut_plot = ggplot(coad_df, aes(x=Patient.ID, fill = Mutation.Count))+
+  geom_bar()+
+  labs(title='Mutations by Patient')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+boxplot1
+boxplot2
+boxplot3
+
+
+```
+
+```{r}
+
+
+diag_age <- coad_df2$Diagnosis.Age
+mut_count <- coad_df2$Mutation.Count
+tmb_count <- coad_df2$TMB..nonsynonymous.
+
+bw1 <- 2 * IQR(diag_age) / length(diag_age)^(1/3)
+bw2 <- 2 * IQR(mut_count) / length(mut_count)^(1/3)
+bw3 <- 2 * IQR(tmb_count) / length(tmb_count)^(1/3)
+
+
+histplot1 = ggplot(coad_df, aes(x=Diagnosis.Age))+
+  geom_histogram(aes(y=..density..), binwidth = bw1, color="black", fill="blue")+
+  geom_density()+
+  labs(title='Age')
+
+histplot2 = ggplot(coad_df, aes(x=Mutation.Count))+
+  geom_histogram(aes(y=..density..), binwidth = bw2, color="black", fill="blue")+
+  geom_density()+
+  labs(title='Mutation')
+
+# histplot3 = ggplot(coad_df, aes(x=TMB..nonsynonymous.))+
+#   geom_histogram(aes(y=..density..), binwidth = bw3, color="black", fill="blue")+
+#   geom_density()+
+#   labs(title='TMB')
+
+
+grid.arrange(histplot1,histplot2, ncol=2, nrow =1)
+
+
+```
+
+```{r}
+
+diag_age <- coad_df2$Diagnosis.Age
+mut_count <- coad_df2$Mutation.Count
+tmb_count <- coad_df2$TMB..nonsynonymous.
+
+age_winsor_list <- winsor(diag_age, trim = 0.05, na.rm= TRUE)
+mut_winsor_list <- winsor(mut_count, trim = 0.05, na.rm= TRUE)
+tmb_winsor_list <- winsor(tmb_count, trim = 0.05, na.rm= TRUE)
+
+age_winsor_df <- as.data.frame(age_winsor_list)
+mut_winsor_df <- as.data.frame(mut_winsor_list)
+tmb_winsor_df <- as.data.frame(tmb_winsor_list)
+
+bw4 <- 2 * IQR(age_winsor_list) / length(age_winsor_list)^(1/3)
+bw5 <- 2 * IQR(mut_winsor_list) / length(mut_winsor_list)^(1/3)
+bw6 <- 2 * IQR(tmb_winsor_list) / length(tmb_winsor_list)^(1/3)
+
+
+histplot4 = ggplot(age_winsor_df, aes(x=age_winsor_list))+
+  geom_histogram(aes(y=..density..), binwidth = bw4, color="black", fill="blue")+
+  geom_density()+
+  labs(title='Age')
+
+histplot5 = ggplot(mut_winsor_df, aes(x=mut_winsor_list))+
+  geom_histogram(aes(y=..density..), binwidth = bw5, color="black", fill="blue")+
+  geom_density()+
+  labs(title='Mutation')
+
+# histplot6 = ggplot(tmb_winsor_df, aes(x=tmb_winsor_list))+
+#   geom_histogram(aes(y=..density..), binwidth = bw6, color="black", fill="blue")+
+#   geom_density()+
+#   labs(title='TMB')
+
+
+grid.arrange(histplot4,histplot5, ncol=2, nrow =1)
+
+```
+
+
+```{r}
+
+agg_df_num <- coad_df %>% count(Diagnosis.Age, Mutation.Count, TMB..nonsynonymous., sort = TRUE)
+corr_df <- subset(agg_df_num, select = -c(n))
+
+corrplot(cor(corr_df), method = 'number', title = "Correlation Plot of Numeric Values in coad Dataset", mar=c(0,0,1,0))
+
+```

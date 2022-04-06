@@ -1,0 +1,51 @@
+---
+title: "explore_data_2"
+author: "Patrick Garr"
+date: "2/17/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(psych)
+library(tidyverse)
+library(gridExtra)
+library(corrplot)
+library(patchwork)
+library(readxl)
+```
+
+```{r}
+coad_gene_data <- read.csv("top3_genes.csv", sep = ",",
+         header = TRUE, stringsAsFactors = TRUE)
+
+empty_col <- sapply(coad_gene_data, function(x) all(is.na(x) | x == ""))
+coad_gene_data <- coad_gene_data[, !empty_col]
+
+coad_gene_data <- subset(coad_gene_data, select = -c(Center, NCBI_Build, Strand, Hotspot))
+
+coad_gene_data$Chromosome <- as.factor(coad_gene_data$Chromosome)
+coad_gene_data$Start_Position <- as.factor(coad_gene_data$Start_Position)
+coad_gene_data$End_Position <- as.factor(coad_gene_data$End_Position)
+coad_gene_data$Protein_position <- as.factor(coad_gene_data$Protein_position)
+
+
+summary(coad_gene_data)
+
+```
+
+
+```{r}
+gene_plot1 = ggplot(coad_gene_data, aes(x=Tumor_Sample_Barcode, fill=Hugo_Symbol))+
+  geom_bar()+
+  labs(title='Top 3 Genes Expressed for each Patient ID')+
+  theme(plot.title = element_text(hjust = 0.5))
+gene_plot1
+
+gene_plot2 = ggplot(coad_gene_data, aes(x=Variant_Type, fill=Hugo_Symbol))+
+  geom_bar()+
+  labs(title='Top 3 Genes Variation Type')+
+  theme(plot.title = element_text(hjust = 0.5))
+gene_plot2
+```
