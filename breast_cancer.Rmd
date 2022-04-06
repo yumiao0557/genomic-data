@@ -127,6 +127,40 @@ grid.arrange(boxplot1,boxplot2,boxplot3,boxplot4,boxplot5,boxplot6,boxplot7,boxp
 
 ```
 
+```{r}
+# Creating a density plot examining the ten factors' means
+pt1 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x =radius_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = radius_mean, y=..density..)) +
+    labs(title='density function of radius_mean', x='radius_mean', y='density') 
+pt2 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = texture_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = texture_mean, y=..density..)) +
+    labs(title='density function of texture_mean', x='texture_mean', y='density')
+pt3 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = perimeter_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = perimeter_mean, y=..density..)) +
+    labs(title='density function of perimeter_mean', x='perimeter_mean', y='density')
+pt4 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = area_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = area_mean, y=..density..)) +
+    labs(title='density function of area_mean', x='area_mean', y='density')
+pt5 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = smoothness_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = smoothness_mean, y=..density..)) +
+    labs(title='density function of smoothness_mean', x='smoothness_mean', y='density')
+pt6 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = compactness_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = compactness_mean, y=..density..)) +
+    labs(title='density function of compactness_mean', x='compactness_mean', y='density')
+pt7 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = concavity_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = concavity_mean, y=..density..)) +
+    labs(title='density function of concavity_mean', x='concavity_mean', y='density')
+pt8 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = concave.points_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = concave.points_mean, y=..density..)) +
+    labs(title='density function of concave.points_mean', x='concave.points_mean', y='density')
+pt9 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = symmetry_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = symmetry_mean, y=..density..)) +
+    labs(title='density function of symmetry_mean', x='symmetry_mean', y='density')
+pt10 = ggplot(data = wdbc.data) +
+    geom_histogram(aes(x = fractal_dimension_mean, y=..density..), colour = "black", fill = "red") + geom_density(aes(x = fractal_dimension_mean, y=..density..)) +
+    labs(title='density function of fractal_dimension_mean', x='fractal_dimension_mean', y='density')
+grid.arrange(pt1,pt2,pt3,pt4,pt5,pt6,pt7,pt8,pt9,pt10, ncol=4, nrow =3)
+```
 
 ```{r}
 
@@ -283,6 +317,7 @@ confmat.hcl <- confusionMatrix(cutHcl3,wdbc.df[,1])
 confmat.hcl
 
 ```
+
 ```{r}
 # Write a function to calculcate the misclassification rate
 cal_misclassification <- function(confusionTab){
@@ -301,7 +336,6 @@ test.tr1 <- as.data.frame(wdbc.data[-idx,])
 test.tr <- test.tr1[,-c(1)]
 train.labels <- train.df[,1]
 test.labels.tr <- test.tr1[,1]
-
 library(tree)
 # Use a decision tree to find which features are more significant
 wdbc.tree = tree(diagnosis~., data =train.tr)
@@ -314,7 +348,6 @@ treePred = predict(wdbc.tree, test.tr, type='class')
 confusionTab = table(Predicted = treePred, Actual = test.labels.tr)
 confusionTab
 cal_misclassification(confusionTab)
-
 confusionMatrix(treePred,test.labels.tr)
 ```
 According to the confusion matrix, we could see that the misclassification rate is very low.
@@ -333,30 +366,24 @@ treePred2 = predict(prune.wdbc, test.tr, type='class')
 # confusionTab2 = table(Predicted = treePred2, Actual = test.labels.tr)
 # confusionTab2
 # cal_misclassification(confusionTab2)
-confusionMatrix(treePred2, test.labels.tr)
+confmat.rand <- confusionMatrix(treePred2, test.labels.tr)
+confmat.rand
 ```
 We could see that the model has smaller size with same misclassification rate now.
 
 
 ```{r}
-
 # mtry is the number of variables randomly sampled at each split. Use sqrt(p) here for classification
 library(randomForest)
 wdbc.rf = randomForest(diagnosis~., data = train.tr, mtry = sqrt(ncol(train.tr)), ntree = 500)
 wdbc.rf
-
 rfPreds = predict(wdbc.rf, test.tr)
-
-
 plot(wdbc.rf)
 summary(wdbc.rf)
 importance(wdbc.rf)
 varImpPlot(wdbc.rf)
-
-
 bestmtry <- tuneRF(train.tr[2:31], train.tr$diagnosis, stepFactor=1.5, improve=1e-5, ntree=500)
 print(bestmtry)
-
 # Use the best mtry
 optRf = randomForest(diagnosis~., data = train.tr, mtry = 7, ntree = 320)
 plot(optRf)
@@ -365,6 +392,8 @@ varImpPlot(optRf)
 pred.rf = predict(optRf, test.tr)
 confusionMatrix(pred.rf, test.labels.tr)
 ```
+
+
 
 ```{r}
 # LDA
@@ -508,7 +537,8 @@ svm.linear <- train(diagnosis ~., train.df, method = "svmLinear", trControl=cont
 svm.linear
 
 pred.svm1 <- predict(svm.linear, test.df)
-confusionMatrix(pred.svm1, test.labels)
+confmat.svm1 <- confusionMatrix(pred.svm1, test.labels)
+confmat.svm1
 
 # Using grid search to tune the SVM classifier with different cost values
 grid <- expand.grid(C = c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,3))
@@ -517,7 +547,29 @@ svm.linear.grid
 plot(svm.linear.grid)
 
 pred.svm2 <- predict(svm.linear.grid, test.df)
-confusionMatrix(pred.svm2, test.labels)
+confmat.svm2 <- confusionMatrix(pred.svm2, test.labels)
+confmat.svm2
+
+# Repeating with reduced features
+# Prepare the training scheme with repeated cross-validation method
+svm.linear.simp <- train(diagnosis ~ area_worst + texture_worst + concave.points_worst + concave.points_mean + smoothness_worst,
+                    train.df, 
+                    method = "svmLinear", 
+                    trControl=control, 
+                    tuneLength = 10)
+svm.linear.simp
+
+pred.svm2 <- predict(svm.linear.simp, test.df)
+confmat.svm3 <- confusionMatrix(pred.svm2, test.labels)
+confmat.svm3
+# # Using grid search to tune the SVM classifier with different cost values
+# grid <- expand.grid(C = c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,3))
+# svm.linear.grid <- train(diagnosis ~., train.df, method = "svmLinear", trControl=control, tuneGrid = grid, tuneLength = 10)
+# svm.linear.grid
+# plot(svm.linear.grid)
+# 
+# pred.svm2 <- predict(svm.linear.grid, test.df)
+# confusionMatrix(pred.svm2, test.labels)
 
 ```
 
@@ -571,7 +623,8 @@ ggplot(data = coeffs.dt) +
 pred.ridge <- predict(ridge.glm, s = lmin.ridge, newx = x.test)
 pred.ridge <- ifelse(pred.ridge > 0.5, '1', '0')
 pred.ridge <- as.factor(pred.ridge) 
-confusionMatrix(pred.ridge, test.labels)
+confmat.ridge <- confusionMatrix(pred.ridge, test.labels)
+confmat.ridge
 
 ```
 
@@ -617,7 +670,8 @@ ggplot(data = coeffs.dt2) +
 pred.lasso <- plogis(predict(lasso.glm, s = lmin.lasso, newx = x.test))
 pred.lasso <- ifelse(pred.lasso > 0.5, '1', '0')
 pred.lasso <- as.factor(pred.lasso) 
-confusionMatrix(pred.lasso, test.labels)
+confmat.lasso <- confusionMatrix(pred.lasso, test.labels)
+confmat.lasso
 
 ``` 
 ```{r}
