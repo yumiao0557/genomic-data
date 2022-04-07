@@ -357,10 +357,10 @@ According to the confusion matrix, we could see that the misclassification rate 
 # Although the model already has very good performance, we Use cross validation to see if the performance could be further improved, or if we could reach similar performance use a more simple model.
 set.seed(1)
 cv.wdbc.tree = cv.tree(wdbc.tree, FUN = prune.misclass)
-plot(cv.wdbc.tree)
+plot(cv.wdbc.tree, main = ("Cross-validated decision tree"))
 # The lowest misclassification and simplest model is node= 4.
 prune.wdbc = prune.misclass(wdbc.tree, best = 4)
-plot(prune.wdbc)
+print(plot(prune.wdbc),top=textGrob("Prune of cross-validated decision tree"))
 text(prune.wdbc, pretty = 0)
 treePred2 = predict(prune.wdbc, test.tr, type='class')
 # confusionTab2 = table(Predicted = treePred2, Actual = test.labels.tr)
@@ -378,7 +378,7 @@ library(randomForest)
 wdbc.rf = randomForest(diagnosis~., data = train.tr, mtry = sqrt(ncol(train.tr)), ntree = 500)
 wdbc.rf
 rfPreds = predict(wdbc.rf, test.tr)
-plot(wdbc.rf)
+plot(wdbc.rf, main = ("Random forest"))
 summary(wdbc.rf)
 importance(wdbc.rf)
 varImpPlot(wdbc.rf)
@@ -386,7 +386,7 @@ bestmtry <- tuneRF(train.tr[2:31], train.tr$diagnosis, stepFactor=1.5, improve=1
 print(bestmtry)
 # Use the best mtry
 optRf = randomForest(diagnosis~., data = train.tr, mtry = 7, ntree = 320)
-plot(optRf)
+plot(optRf, main = ("Optimal Random forest"))
 importance(optRf)
 varImpPlot(optRf)
 pred.rf = predict(optRf, test.tr)
